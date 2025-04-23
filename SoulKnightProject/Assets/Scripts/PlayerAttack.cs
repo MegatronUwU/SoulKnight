@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private GameObject _projectilePrefab;
+    [SerializeField] private Projectile _projectilePrefab;
     [SerializeField] private float _projectileSpeed = 10f;
     [SerializeField] private float _projectileLifetime = 2f;
     [SerializeField] private float _fireCooldown = 0.5f;
+    [SerializeField] private float _projectileSpawnOffset = 1f;
+    [SerializeField] private Transform _renderer = null;
 
     private float _lastFireTime;
 
@@ -16,15 +18,9 @@ public class PlayerAttack : MonoBehaviour
 
         _lastFireTime = Time.time;
 
-        Vector3 spawnPos = transform.position + transform.forward * 1f;
-        GameObject projectile = Instantiate(_projectilePrefab, spawnPos, Quaternion.identity);
+        Vector3 spawnPos = _renderer.position + _renderer.forward * _projectileSpawnOffset;
+        Projectile projectile = Instantiate(_projectilePrefab, spawnPos, Quaternion.identity);
 
-        if (projectile.TryGetComponent(out Rigidbody rb))
-        {
-            // Dois sûrement faire tourner mon player, besoin de fix ça
-            rb.linearVelocity = transform.forward * _projectileSpeed;
-        }
-
-        Destroy(projectile, _projectileLifetime);
+        projectile.Initialize(_renderer.forward);
     }
 }
