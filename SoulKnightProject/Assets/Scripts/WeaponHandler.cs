@@ -7,7 +7,7 @@ public class WeaponHandler : MonoBehaviour
 
     public void TriggerAttack()
     {
-        if (_currentWeapon != null && _renderer != null)
+        if (_currentWeapon != null && _renderer != null && _currentWeapon.CanShoot())
         {
             _currentWeapon.Shoot(_renderer);
         }

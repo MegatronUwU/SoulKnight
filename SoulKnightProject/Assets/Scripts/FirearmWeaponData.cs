@@ -1,9 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MachineGunWeaponData", menuName = "Scriptable Objects/MachineGunWeaponData")]
-public class MachineGunWeaponData : WeaponData
+[CreateAssetMenu(fileName = "FirearmWeaponData", menuName = "Scriptable Objects/FirearmWeaponData")]
+public class FirearmWeaponData : WeaponData
 {
-    public override void Shoot(Transform directionReference)
+	public override void Shoot(Transform directionReference)
     {
         // On reprends le même code que le pistol en modifiant les valeurs
         if (ProjectilePrefab == null) return;
@@ -12,4 +12,9 @@ public class MachineGunWeaponData : WeaponData
         Projectile projectile = Instantiate(ProjectilePrefab, spawnPos, Quaternion.identity);
         projectile.Initialize(directionReference.forward);
     }
+
+	public override bool CanShoot()
+	{
+        return true;
+	}
 }

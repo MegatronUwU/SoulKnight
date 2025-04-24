@@ -1,7 +1,5 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "WeaponData", menuName = "Scriptable Objects/WeaponData")]
-
 public abstract class WeaponData : ScriptableObject
 {
     public string WeaponName;
@@ -12,5 +10,7 @@ public abstract class WeaponData : ScriptableObject
     public Projectile ProjectilePrefab;
 
     public abstract void Shoot(Transform shootOrigin);
+
+    public abstract bool CanShoot();
 }
 

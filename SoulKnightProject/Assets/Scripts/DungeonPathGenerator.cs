@@ -36,7 +36,22 @@ public class DungeonPathGenerator : MonoBehaviour
         }
     }
 
-    private Vector3 GetRandomCardinalDirection()
+	/*
+     
+     Vector3(1,0,8)
+
+     Vector(0,0,8) => true
+     Vector(2,0,8) => false
+
+     Vector3(1,0,7) => false
+     Vector3(1,0,9) => true
+     
+     Direction.Left
+     Direction.Up
+     
+     */
+
+	private Vector3 GetRandomCardinalDirection()
     {
         Vector3[] directions = new[]
         {

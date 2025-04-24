@@ -24,4 +24,9 @@ public class ShotgunWeaponData : WeaponData
             projectile.Initialize(direction);
         }
     }
+
+	public override bool CanShoot()
+	{
+		return true;
+	}
 }
