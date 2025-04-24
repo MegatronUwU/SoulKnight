@@ -12,4 +12,10 @@ public class WeaponHandler : MonoBehaviour
             _currentWeapon.Shoot(_renderer);
         }
     }
+
+    public void SetWeapon(WeaponData newWeapon)
+    {
+        _currentWeapon = newWeapon;
+    }
+
 }
