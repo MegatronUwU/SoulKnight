@@ -562,6 +562,7 @@ MonoBehaviour:
   _pathLength: 10
   _roomSpacing: 12
   _dungeonParent: {fileID: 1695536907}
+  _corridorPrefab: {fileID: 8926578685659555167, guid: d4b1db6723690224a9e7bd638f5c2036, type: 3}
 --- !u!4 &763544257
 Transform:
   m_ObjectHideFlags: 0
