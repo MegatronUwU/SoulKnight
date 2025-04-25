@@ -4,7 +4,7 @@ public class RoomConnector : MonoBehaviour
 {
     [SerializeField] private DoorAnchor[] _doorAnchors;
 
-    public Transform GetDoorTransform(Direction direction)
+    public Transform GetDoorWaypointTransform(Direction direction)
     {
         foreach (DoorAnchor anchor in _doorAnchors)
         {
@@ -22,10 +22,11 @@ public class RoomConnector : MonoBehaviour
 		public Transform doorTransform;
 	}
 
+}
+
 	public enum Direction
 	{
 		Up, Down, Left, Right
 	}
-}
 
 // un peu rincé, j'arrive à comprendre le principes mais la manière de faire est un peu bizarre

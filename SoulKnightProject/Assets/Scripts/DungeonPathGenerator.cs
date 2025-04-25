@@ -4,7 +4,7 @@ using System.Linq;
 
 public class DungeonPathGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject _roomPrefab;
+    [SerializeField] private Room _roomPrefab;
     [SerializeField] private int _pathLength = 10;
     [SerializeField] private float _roomSpacing = 12f;
     [SerializeField] private Transform _dungeonParent;
@@ -58,47 +58,108 @@ public class DungeonPathGenerator : MonoBehaviour
     {
         foreach (RoomData data in _roomDatas)
         {
-            GameObject room = Instantiate(_roomPrefab, data.Position, Quaternion.identity, _dungeonParent);
-            RoomConnector connector = room.GetComponent<RoomConnector>();
+            data.InstantiatedRoom = Instantiate(_roomPrefab, data.Position, Quaternion.identity, _dungeonParent);
+        }
 
-            foreach (var direction in data.Directions)
+		foreach (RoomData data in _roomDatas)
+		{
+			RoomConnector connector = data.InstantiatedRoom.GetComponent<RoomConnector>();
+
+            foreach(KeyValuePair<Direction, RoomData> neighbour in data.Neighbours)
             {
-                Transform door = connector.GetDoorTransform(direction);
-                if (door != null)
-                    door.gameObject.SetActive(false);
+				Transform doorWaypoint = connector.GetDoorWaypointTransform(neighbour.Key);
+
+				if (doorWaypoint != null)
+				{
+					//Destroy(door.gameObject);
+					//=> supprimer la porte
+					//=> connector.DestroyDoor(InverseDirection(data.Direction));
+					//=> Destroy(doorWaypoint.GetChild(0));
+				}
+
+                RoomConnector neightboorRoomConnector = neighbour.Value.InstantiatedRoom.GetComponent<RoomConnector>();
+                Direction oppositeDirection = GetOppositeDirection(neighbour.Key);
+                Transform neighbourDoorWaypoint = neightboorRoomConnector.GetDoorWaypointTransform(oppositeDirection);
+
+				SpawnCorridor(doorWaypoint.position, neighbourDoorWaypoint.position);
+			}
+        /*
+			foreach (var direction in data.Directions)
+            {
+                Transform doorWaypoint = connector.GetDoorWaypointTransform(direction);
+
+                if (doorWaypoint != null)
+                {
+                    //Destroy(door.gameObject);
+                    //=> supprimer la porte
+                    //=> connector.DestroyDoor(InverseDirection(data.Direction));
+                    //=> Destroy(doorWaypoint.GetChild(0));
+                }
 
                 Vector3 neighborPos = data.Position + DirectionToVector3(direction) * _roomSpacing;
                 SpawnCorridor(data.Position, neighborPos);
             }
+        */
         }
     }
 
-    // On cherche les connexions pour chaque pièce
-    private void FindRoomsNeighbours()
+	private Direction GetOppositeDirection(Direction direction)
+	{
+        return direction switch
+        {
+            Direction.Up => Direction.Down,
+            Direction.Down => Direction.Up,
+            Direction.Left => Direction.Right,
+            Direction.Right => Direction.Left,
+            _ => Direction.Down,
+        };
+	}
+
+	// On cherche les connexions pour chaque pièce
+	private void FindRoomsNeighbours()
     {
         foreach (RoomData roomData in _roomDatas)
         {
-            if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.left))
-                roomData.AddNeighbourPosition(RoomConnector.Direction.Left);
+            RoomData neighbour = _roomDatas.FirstOrDefault(rd => rd.Position == roomData.Position + Vector3.left * _roomSpacing);
+            if (neighbour != null)
+                roomData.AddNeighbourPosition(Direction.Left, neighbour);
 
-            if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.right))
-                roomData.AddNeighbourPosition(RoomConnector.Direction.Right);
+			neighbour = _roomDatas.FirstOrDefault(rd => rd.Position == roomData.Position + Vector3.right * _roomSpacing);
+			if (neighbour != null)
+				roomData.AddNeighbourPosition(Direction.Right, neighbour);
 
-            if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.forward))
-                roomData.AddNeighbourPosition(RoomConnector.Direction.Up);
+			neighbour = _roomDatas.FirstOrDefault(rd => rd.Position == roomData.Position + Vector3.forward * _roomSpacing);
+			if (neighbour != null)
+				roomData.AddNeighbourPosition(Direction.Up, neighbour);
 
-            if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.back))
-                roomData.AddNeighbourPosition(RoomConnector.Direction.Down);
-        }
+			neighbour = _roomDatas.FirstOrDefault(rd => rd.Position == roomData.Position + Vector3.back * _roomSpacing);
+			if (neighbour != null)
+				roomData.AddNeighbourPosition(Direction.Down, neighbour);
+
+			//if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.left * _roomSpacing))
+			//             roomData.AddNeighbourPosition(Direction.Left);
+
+			//         if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.right * _roomSpacing))
+			//             roomData.AddNeighbourPosition(Direction.Right);
+
+			//         if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.forward * _roomSpacing))
+			//             roomData.AddNeighbourPosition(Direction.Up);
+
+			//         if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.back * _roomSpacing))
+			//             roomData.AddNeighbourPosition(Direction.Down);
+		}
     }
 
     // On spawn un couloir entre deux positions
     private void SpawnCorridor(Vector3 from, Vector3 to)
     {
         Vector3 direction = to - from;
-        Vector3 position = from + direction / 2f;
+        Vector3 position = (from + to) / 2f;
         Quaternion rotation = Quaternion.LookRotation(direction);
-        Instantiate(_corridorPrefab, position, rotation, _dungeonParent);
+
+        GameObject corridor = Instantiate(_corridorPrefab, position, rotation, _dungeonParent);
+
+        //Debug.Log($"Spawned corridor at position: {position}", corridor);
     }
 
     private Vector3 GetRandomCardinalDirection()
@@ -115,14 +176,14 @@ public class DungeonPathGenerator : MonoBehaviour
     }
 
     // On convertit la direction en vector 3
-    private Vector3 DirectionToVector3(RoomConnector.Direction direction)
+    private Vector3 DirectionToVector3(Direction direction)
     {
         return direction switch
         {
-            RoomConnector.Direction.Up => Vector3.forward,
-            RoomConnector.Direction.Down => Vector3.back,
-            RoomConnector.Direction.Left => Vector3.left,
-            RoomConnector.Direction.Right => Vector3.right,
+            Direction.Up => Vector3.forward,
+            Direction.Down => Vector3.back,
+            Direction.Left => Vector3.left,
+            Direction.Right => Vector3.right,
             _ => Vector3.zero
         };
     }
@@ -130,18 +191,28 @@ public class DungeonPathGenerator : MonoBehaviour
     private class RoomData
     {
         public Vector3 Position;
-        public List<RoomConnector.Direction> Directions = new();
+        public List<Direction> Directions = new();
+        public Dictionary<Direction, RoomData> Neighbours = new();
+        public Room InstantiatedRoom = null;
 
         public RoomData(Vector3 pos)
         {
             Position = pos;
         }
 
-        public void AddNeighbourPosition(RoomConnector.Direction direction)
+        public void AddNeighbourPosition(Direction direction)
         {
             if (!Directions.Contains(direction))
                 Directions.Add(direction);
         }
-    }
+
+		public void AddNeighbourPosition(Direction direction, RoomData neighbour)
+		{
+			if (!Neighbours.TryAdd(direction, neighbour))
+            {
+                Debug.LogError("Duplicate neighbour");
+            }
+		}
+	}
 }
 
