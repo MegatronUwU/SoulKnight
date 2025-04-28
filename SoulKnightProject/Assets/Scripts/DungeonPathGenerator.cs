@@ -68,8 +68,9 @@ public class DungeonPathGenerator : MonoBehaviour
             foreach(KeyValuePair<Direction, RoomData> neighbour in data.Neighbours)
             {
 				Transform doorWaypoint = connector.GetDoorWaypointTransform(neighbour.Key);
+                connector.OpenDoor(neighbour.Key);
 
-				if (doorWaypoint != null)
+                if (doorWaypoint != null)
 				{
 					//Destroy(door.gameObject);
 					//=> supprimer la porte
@@ -83,23 +84,23 @@ public class DungeonPathGenerator : MonoBehaviour
 
 				SpawnCorridor(doorWaypoint.position, neighbourDoorWaypoint.position);
 			}
-        /*
-			foreach (var direction in data.Directions)
-            {
-                Transform doorWaypoint = connector.GetDoorWaypointTransform(direction);
-
-                if (doorWaypoint != null)
+            /*
+                foreach (var direction in data.Directions)
                 {
-                    //Destroy(door.gameObject);
-                    //=> supprimer la porte
-                    //=> connector.DestroyDoor(InverseDirection(data.Direction));
-                    //=> Destroy(doorWaypoint.GetChild(0));
-                }
+                    Transform doorWaypoint = connector.GetDoorWaypointTransform(direction);
 
-                Vector3 neighborPos = data.Position + DirectionToVector3(direction) * _roomSpacing;
-                SpawnCorridor(data.Position, neighborPos);
-            }
-        */
+                    if (doorWaypoint != null)
+                    {
+                        //Destroy(door.gameObject);
+                        //=> supprimer la porte
+                        //=> connector.DestroyDoor(InverseDirection(data.Direction));
+                        //=> Destroy(doorWaypoint.GetChild(0));
+                    }
+
+                    Vector3 neighborPos = data.Position + DirectionToVector3(direction) * _roomSpacing;
+                    SpawnCorridor(data.Position, neighborPos);
+                }
+            */
         }
     }
 
@@ -153,7 +154,7 @@ public class DungeonPathGenerator : MonoBehaviour
     // On spawn un couloir entre deux positions
     private void SpawnCorridor(Vector3 from, Vector3 to)
     {
-        Vector3 direction = to - from;
+        Vector3 direction = to - from; 
         Vector3 position = (from + to) / 2f;
         Quaternion rotation = Quaternion.LookRotation(direction);
 
