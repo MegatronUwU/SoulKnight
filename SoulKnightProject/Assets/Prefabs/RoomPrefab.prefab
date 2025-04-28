@@ -302,6 +302,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fc1d2b5141bb84dae71253d9c528ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _possibleObjectsToSpawn: []
+  _possibleEnemiesToSpawn: []
+  _maxObjects: 5
+  _maxEnemies: 3
+  _spawnArea: {fileID: 0}
+  _roomType: 0
 --- !u!114 &1692242983019978706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,6 +333,10 @@ MonoBehaviour:
   _doorRight: {fileID: 7108065785761375413}
   _doorUp: {fileID: 5360638296290345921}
   _doorDown: {fileID: 7224419061872749287}
+  _wallLeft: {fileID: 7191601696120478777}
+  _wallRight: {fileID: 4261370340070625092}
+  _wallUp: {fileID: 6774657269193981984}
+  _wallDown: {fileID: 6411149103044717436}
 --- !u!33 &1907031691079063847
 MeshFilter:
   m_ObjectHideFlags: 0
