@@ -61,7 +61,9 @@ public class DungeonPathGenerator : MonoBehaviour
             data.InstantiatedRoom = Instantiate(_roomPrefab, data.Position, Quaternion.identity, _dungeonParent);
         }
 
-		foreach (RoomData data in _roomDatas)
+        HashSet<(RoomData, RoomData)> corridorsCreated = new HashSet<(RoomData, RoomData)>();
+
+        foreach (RoomData data in _roomDatas)
 		{
 			RoomConnector connector = data.InstantiatedRoom.GetComponent<RoomConnector>();
 
@@ -82,8 +84,12 @@ public class DungeonPathGenerator : MonoBehaviour
                 Direction oppositeDirection = GetOppositeDirection(neighbour.Key);
                 Transform neighbourDoorWaypoint = neightboorRoomConnector.GetDoorWaypointTransform(oppositeDirection);
 
-				SpawnCorridor(doorWaypoint.position, neighbourDoorWaypoint.position);
-			}
+                if (!corridorsCreated.Contains((data, neighbour.Value)) && !corridorsCreated.Contains((neighbour.Value, data)))
+                {
+                    SpawnCorridor(doorWaypoint.position, neighbourDoorWaypoint.position);
+                    corridorsCreated.Add((data, neighbour.Value));
+                }
+            }
             /*
                 foreach (var direction in data.Directions)
                 {
@@ -136,18 +142,6 @@ public class DungeonPathGenerator : MonoBehaviour
 			neighbour = _roomDatas.FirstOrDefault(rd => rd.Position == roomData.Position + Vector3.back * _roomSpacing);
 			if (neighbour != null)
 				roomData.AddNeighbourPosition(Direction.Down, neighbour);
-
-			//if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.left * _roomSpacing))
-			//             roomData.AddNeighbourPosition(Direction.Left);
-
-			//         if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.right * _roomSpacing))
-			//             roomData.AddNeighbourPosition(Direction.Right);
-
-			//         if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.forward * _roomSpacing))
-			//             roomData.AddNeighbourPosition(Direction.Up);
-
-			//         if (_roomDatas.Any(rd => rd.Position == roomData.Position + Vector3.back * _roomSpacing))
-			//             roomData.AddNeighbourPosition(Direction.Down);
 		}
     }
 

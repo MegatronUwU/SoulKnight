@@ -65,10 +65,9 @@ public class Room : MonoBehaviour
         // TODO Prefabs de coffre
     }
 
-    // Spawn d'un boss
     private void SpawnBoss()
     {
-        Debug.Log("Spawn boss!");
+        Debug.Log("Spawn boss");
         // TODO Prefabs de boss
     }
 
