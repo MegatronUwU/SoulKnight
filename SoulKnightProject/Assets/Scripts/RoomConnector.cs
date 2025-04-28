@@ -3,23 +3,13 @@ using UnityEngine;
 public class RoomConnector : MonoBehaviour
 {
     [SerializeField] private DoorAnchor[] _doorAnchors;
-    [SerializeField] private GameObject _doorLeft;
-    [SerializeField] private GameObject _doorRight;
-    [SerializeField] private GameObject _doorUp;
-    [SerializeField] private GameObject _doorDown;
-
-    [SerializeField] private GameObject _wallLeft;
-    [SerializeField] private GameObject _wallRight;
-    [SerializeField] private GameObject _wallUp;
-    [SerializeField] private GameObject _wallDown;
 
     private void Awake()
     {
-        if (_doorLeft != null) _doorLeft.SetActive(false);
-        if (_doorRight != null) _doorRight.SetActive(false);
-        if (_doorUp != null) _doorUp.SetActive(false);
-        if (_doorDown != null) _doorDown.SetActive(false);
+        foreach(DoorAnchor doorAnchor in _doorAnchors)
+            doorAnchor.Door.SetActive(false);
     }
+
     public Transform GetDoorWaypointTransform(Direction direction)
     {
         foreach (DoorAnchor anchor in _doorAnchors)
@@ -31,27 +21,29 @@ public class RoomConnector : MonoBehaviour
         return null;
     }
 
+    public DoorAnchor GetDoorAnchorFromDirection(Direction direction)
+    {
+        foreach(DoorAnchor anchor in _doorAnchors)
+        {
+            if (anchor.direction == direction)
+                return anchor;
+        }
+
+        return null;
+    }
+
     public void OpenDoor(Direction direction)
     {
-        switch (direction)
-        {
-            case Direction.Left:
-                if (_doorLeft != null) _doorLeft.SetActive(true);
-                if (_wallLeft != null) _wallLeft.SetActive(false);
-                break;
-            case Direction.Right:
-                if (_doorRight != null) _doorRight.SetActive(true);
-                if (_wallRight != null) _wallRight.SetActive(false);
-                break;
-            case Direction.Up:
-                if (_doorUp != null) _doorUp.SetActive(true);
-                if (_wallUp != null) _wallUp.SetActive(false);
-                break;
-            case Direction.Down:
-                if (_doorDown != null) _doorDown.SetActive(true);
-                if (_wallDown != null) _wallDown.SetActive(false);
-                break;
-        }
+        DoorAnchor anchor = GetDoorAnchorFromDirection(direction);
+
+		if (anchor == null)
+            return;
+
+        if (anchor.Door == null || anchor.Wall == null)
+            return;
+
+        Destroy(anchor.Wall);
+        anchor.Door.SetActive(true);
     }
 
     [System.Serializable]
@@ -59,6 +51,8 @@ public class RoomConnector : MonoBehaviour
     {
         public Direction direction;
         public Transform doorTransform;
+        public GameObject Wall;
+        public GameObject Door;
     }
 }
 

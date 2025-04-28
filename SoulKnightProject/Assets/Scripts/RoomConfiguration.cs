@@ -1,0 +1,11 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "New RoomConfiguration", menuName = "Scriptable Objects/RoomConfiguration")]
+public class RoomConfiguration : ScriptableObject
+{
+	public int MaxObjectsCount = 5;
+	public GameObject[] PossibleObjectsToSpawn;
+
+	public int MaxEnemiesCount = 3;
+	public GameObject[] PossibleEnemiesToSpawn;
+}

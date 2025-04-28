@@ -3,57 +3,65 @@ using System.Collections.Generic;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _possibleObjectsToSpawn;
-    [SerializeField] private GameObject[] _possibleEnemiesToSpawn;
-    [SerializeField] private int _maxObjects = 5;
-    [SerializeField] private int _maxEnemies = 3;
+    //[SerializeField] private GameObject[] _possibleObjectsToSpawn;
+    //[SerializeField] private GameObject[] _possibleEnemiesToSpawn;
+    //[SerializeField] private int _maxObjects = 5;
+    //[SerializeField] private int _maxEnemies = 3;
     [SerializeField] private Transform _spawnArea;
 
-    [SerializeField] private RoomType _roomType = RoomType.Normal;
+    //private RoomType _roomType = RoomType.Normal;
 
-    private void Start()
+    public void InitializeRoom(RoomConfiguration configuration)
     {
-        InitializeRoom();
+        SpawnObjects(configuration.MaxObjectsCount, configuration.PossibleObjectsToSpawn);
+        SpawnEnemies(configuration.MaxEnemiesCount, configuration.PossibleEnemiesToSpawn);
+
+        //switch (_roomType)
+        //{
+        //    case RoomType.Normal:
+        //        SpawnObjects();
+        //        SpawnEnemies();
+        //        break;
+
+        //    case RoomType.Treasure:
+        //        SpawnTreasure();
+        //        break;
+
+        //    case RoomType.Boss:
+        //        SpawnBoss();
+        //        break;
+        //}
     }
 
-    private void InitializeRoom()
+    private void SpawnObjects(int maxObjectsCount, GameObject[] objects)
     {
-        switch (_roomType)
+        if (maxObjectsCount == 0)
+            return;
+
+		int objectsCount = Random.Range(0, maxObjectsCount);
+
+        for (int i = 0; i < objectsCount; i++)
         {
-            case RoomType.Normal:
-                SpawnObjects();
-                SpawnEnemies();
-                break;
+            if (objects.Length == 0) return;
 
-            case RoomType.Treasure:
-                SpawnTreasure();
-                break;
-
-            case RoomType.Boss:
-                SpawnBoss();
-                break;
-        }
-    }
-
-    private void SpawnObjects()
-    {
-        for (int i = 0; i < _maxObjects; i++)
-        {
-            if (_possibleObjectsToSpawn.Length == 0) return;
-
-            GameObject obj = _possibleObjectsToSpawn[Random.Range(0, _possibleObjectsToSpawn.Length)];
+            GameObject obj = objects[Random.Range(0, objects.Length)];
             Vector3 spawnPos = GetRandomPositionInArea();
             Instantiate(obj, spawnPos, Quaternion.identity, transform);
         }
     }
 
-    private void SpawnEnemies()
+    private void SpawnEnemies(int maxEnemiesCount, GameObject[] enemies)
     {
-        for (int i = 0; i < _maxEnemies; i++)
-        {
-            if (_possibleEnemiesToSpawn.Length == 0) return;
+		if (maxEnemiesCount == 0)
+			return;
 
-            GameObject enemy = _possibleEnemiesToSpawn[Random.Range(0, _possibleEnemiesToSpawn.Length)];
+		int enemiesCount = Random.Range(0, maxEnemiesCount);
+
+		for (int i = 0; i < enemiesCount; i++)
+        {
+            if (enemies.Length == 0) return;
+
+            GameObject enemy = enemies[Random.Range(0, enemies.Length)];
             Vector3 spawnPos = GetRandomPositionInArea();
             Instantiate(enemy, spawnPos, Quaternion.identity, transform);
         }
@@ -88,9 +96,36 @@ public class Room : MonoBehaviour
 }
 
 // Les Type de room
-public enum RoomType
+//public enum RoomType
+//{
+//    Normal,
+//    Treasure,
+//    Boss
+//}
+
+/*
+public static class RoomFactory
 {
-    Normal,
-    Treasure,
-    Boss
+    public static RoomConfig CreateRoom()
+    {
+        return new RoomConfig();
+    }
+
+    public static RoomConfig SetMaxTreasureCount(this RoomConfig config, int count)
+    {
+        config.maxTreasureCount = count;
+        return config;
+    }
+
+    public static RoomConfig SetMaxEnemyCount(this RoomConfig config, int count)
+    {
+        config.maxEnemyCount = count;
+        return config;
+    }
 }
+
+RoomConfig config = RoomFactory.CreateRoom()
+	.SetMaxEnemyCount(12)
+	.SetMaxTreasureCount(8);
+
+*/

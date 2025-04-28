@@ -13,11 +13,16 @@ public class DungeonPathGenerator : MonoBehaviour
 
     private readonly List<RoomData> _roomDatas = new();
 
-    private void Start()
+    [SerializeField] private RoomConfiguration _normalRoomConfiguration = null;
+    [SerializeField] private RoomConfiguration _treasureRoomConfiguration = null;
+    [SerializeField] private RoomConfiguration _bossRoomConfiguration = null;
+
+	private void Start()
     {
         GeneratePath();
         FindRoomsNeighbours(); 
         SpawnRooms();
+        PopulateRooms();
     }
 
     private void GeneratePath()
@@ -107,6 +112,14 @@ public class DungeonPathGenerator : MonoBehaviour
                     SpawnCorridor(data.Position, neighborPos);
                 }
             */
+        }
+    }
+
+    private void PopulateRooms()
+    {
+        foreach(RoomData data in _roomDatas)
+        {
+            data.InstantiatedRoom.InitializeRoom(_normalRoomConfiguration);
         }
     }
 

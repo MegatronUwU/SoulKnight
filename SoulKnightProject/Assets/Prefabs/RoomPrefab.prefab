@@ -302,12 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fc1d2b5141bb84dae71253d9c528ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _possibleObjectsToSpawn: []
-  _possibleEnemiesToSpawn: []
-  _maxObjects: 5
-  _maxEnemies: 3
-  _spawnArea: {fileID: 0}
-  _roomType: 0
+  _spawnArea: {fileID: 6202380885431505347}
 --- !u!114 &1692242983019978706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,20 +318,20 @@ MonoBehaviour:
   _doorAnchors:
   - direction: 0
     doorTransform: {fileID: 2822446262245610640}
+    Wall: {fileID: 6774657269193981984}
+    Door: {fileID: 5360638296290345921}
   - direction: 1
     doorTransform: {fileID: 1506898037406323568}
+    Wall: {fileID: 6411149103044717436}
+    Door: {fileID: 7224419061872749287}
   - direction: 2
     doorTransform: {fileID: 6274444290759921981}
+    Wall: {fileID: 7191601696120478777}
+    Door: {fileID: 5525802588853511979}
   - direction: 3
     doorTransform: {fileID: 98731922956668122}
-  _doorLeft: {fileID: 5525802588853511979}
-  _doorRight: {fileID: 7108065785761375413}
-  _doorUp: {fileID: 5360638296290345921}
-  _doorDown: {fileID: 7224419061872749287}
-  _wallLeft: {fileID: 7191601696120478777}
-  _wallRight: {fileID: 4261370340070625092}
-  _wallUp: {fileID: 6774657269193981984}
-  _wallDown: {fileID: 6411149103044717436}
+    Wall: {fileID: 4261370340070625092}
+    Door: {fileID: 7108065785761375413}
 --- !u!33 &1907031691079063847
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -933,7 +928,7 @@ Transform:
   m_GameObject: {fileID: 5360638296290345921}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.99994063, z: -0, w: -0.01089617}
-  m_LocalPosition: {x: -2.9992874, y: 1, z: 7.7653637}
+  m_LocalPosition: {x: -3.0646605, y: 1, z: 4.766076}
   m_LocalScale: {x: 4, y: 4.66, z: 0.42}
   m_ConstrainProportionsScale: 0
   m_Children:
