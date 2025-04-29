@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 3275591894012324322}
   m_Layer: 0
   m_Name: Projectile
-  m_TagString: Untagged
+  m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,7 +135,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _lifetime: 2
-  _rigidbody: {fileID: 0}
 --- !u!54 &5071492492985701839
 Rigidbody:
   m_ObjectHideFlags: 0
