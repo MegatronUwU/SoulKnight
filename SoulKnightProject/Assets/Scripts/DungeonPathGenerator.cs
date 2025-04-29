@@ -28,7 +28,10 @@ public class DungeonPathGenerator : MonoBehaviour
     private void GeneratePath()
     {
         Vector3 currentPosition = Vector3.zero;
-        _roomDatas.Add(new RoomData(currentPosition));
+        //_roomDatas.Add(new RoomData(currentPosition));
+        RoomData startRoom = new RoomData(currentPosition);
+        startRoom.Configuration = _normalRoomConfiguration;
+        _roomDatas.Add(startRoom);
 
         for (int i = 1; i < _pathLength; i++)
         {
@@ -37,8 +40,18 @@ public class DungeonPathGenerator : MonoBehaviour
 
             if (_roomDatas.Exists(r => r.Position == nextPosition))
                 continue;
+           
+            RoomData newRoom = new RoomData(nextPosition);
 
-            _roomDatas.Add(new RoomData(nextPosition));
+            if (i == _pathLength - 1)
+                newRoom.Configuration = _bossRoomConfiguration;
+            else if (i == _pathLength - 2)
+                newRoom.Configuration = _treasureRoomConfiguration;
+            else
+                newRoom.Configuration = _normalRoomConfiguration;
+
+            _roomDatas.Add(newRoom);
+            //_roomDatas.Add(new RoomData(nextPosition));
             currentPosition = nextPosition;
         }
     }
@@ -119,7 +132,8 @@ public class DungeonPathGenerator : MonoBehaviour
     {
         foreach(RoomData data in _roomDatas)
         {
-            data.InstantiatedRoom.InitializeRoom(_normalRoomConfiguration);
+            //data.InstantiatedRoom.InitializeRoom(_normalRoomConfiguration);
+            data.InstantiatedRoom.InitializeRoom(data.Configuration);
         }
     }
 
@@ -202,6 +216,7 @@ public class DungeonPathGenerator : MonoBehaviour
         public List<Direction> Directions = new();
         public Dictionary<Direction, RoomData> Neighbours = new();
         public Room InstantiatedRoom = null;
+        public RoomConfiguration Configuration;
 
         public RoomData(Vector3 pos)
         {

@@ -67,17 +67,17 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void SpawnTreasure()
-    {
-        Debug.Log("Spawn coffre");
-        // TODO Prefabs de coffre
-    }
+    //private void SpawnTreasure()
+    //{
+    //    Debug.Log("Spawn coffre");
+    //    // TODO Prefabs de coffre
+    //}
 
-    private void SpawnBoss()
-    {
-        Debug.Log("Spawn boss");
-        // TODO Prefabs de boss
-    }
+    //private void SpawnBoss()
+    //{
+    //    Debug.Log("Spawn boss");
+    //    // TODO Prefabs de boss
+    //}
 
     // On récupère une position aléatoire dans la zone de spawn
     private Vector3 GetRandomPositionInArea()
