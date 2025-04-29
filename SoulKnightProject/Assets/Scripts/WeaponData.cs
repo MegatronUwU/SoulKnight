@@ -9,7 +9,7 @@ public abstract class WeaponData : ScriptableObject
     public float ProjectileSpeed;
     public Projectile ProjectilePrefab;
 
-    public abstract void Shoot(Transform shootOrigin);
+    public abstract void Shoot(Transform shootOrigin, Team team);
 
     public abstract bool CanShoot();
 }

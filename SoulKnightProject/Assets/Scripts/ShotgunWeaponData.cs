@@ -6,7 +6,7 @@ public class ShotgunWeaponData : WeaponData
     public int PelletCount = 5;
     public float SpreadAngle = 15f;
 
-    public override void Shoot(Transform directionReference)
+    public override void Shoot(Transform directionReference, Team team)
     {
         if (ProjectilePrefab == null) return;
 
@@ -21,7 +21,7 @@ public class ShotgunWeaponData : WeaponData
             Vector3 spawnPosition = directionReference.position + direction * 1f;
 
             Projectile projectile = Instantiate(ProjectilePrefab, spawnPosition, Quaternion.identity);
-            projectile.Initialize(direction);
+            projectile.Initialize(direction, team);
         }
     }
 

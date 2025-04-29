@@ -5,35 +5,39 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform _renderer;
     [SerializeField] private WeaponData _weaponData;
     [SerializeField] private float _moveSpeed = 3f;
+    [SerializeField] private float _shootOffset = 1f;
 
-    private Transform _player;
+	[SerializeField]
+	private PlayerReferenceData _playerReferenceData = null;
+
+	private Transform _playerTransform;
     private float _lastShotTime;
 
     private void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        _playerTransform = _playerReferenceData.Player.transform;
     }
 
     private void Update()
     {
-        if (_player == null) return;
+        if (_playerTransform == null) return;
 
         MoveTowardsPlayer();
         TryShootAtPlayer();
     }
 
     private void MoveTowardsPlayer()
-    {
-        Vector3 direction = (_player.position - transform.position).normalized;
-        transform.position += direction * _moveSpeed * Time.deltaTime;
+	{
+		Vector3 direction = (_playerTransform.position - transform.position).normalized;
+		transform.position += _moveSpeed * Time.deltaTime * direction;
 
-        if (_renderer != null)
-        {
-            _renderer.forward = direction;
-        }
-    }
+		if (_renderer == null || direction == Vector3.zero)
+			return;
 
-    private void TryShootAtPlayer()
+		_renderer.forward = direction;
+	}
+
+	private void TryShootAtPlayer()
     {
         if (_weaponData == null)
             return;
@@ -43,8 +47,10 @@ public class EnemyController : MonoBehaviour
 
         _lastShotTime = Time.time;
 
-        Vector3 spawnPos = _renderer.position + _renderer.forward * 1f;
-        Projectile projectile = Instantiate(_weaponData.ProjectilePrefab, spawnPos, Quaternion.identity);
-        projectile.Initialize(_renderer.forward);
+        //Vector3 spawnPos = _renderer.position + _renderer.forward * _shootOffset;
+        _weaponData.Shoot(_renderer, Team.Enemy);
+
+		//Projectile projectile = Instantiate(_weaponData.ProjectilePrefab, spawnPos, Quaternion.identity);
+  //      projectile.Initialize(_renderer.forward, Team.Enemy);
     }
 }

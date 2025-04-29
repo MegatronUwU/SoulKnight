@@ -4,22 +4,18 @@ using UnityEngine.UI;
 public class PlayerHealthBar : MonoBehaviour
 {
     [SerializeField] private Health _playerHealth;
-    [SerializeField] private Slider _healthSlider;
+    [SerializeField] private Image _healthSlider;
 
-    private void Start()
-    {
-        if (_playerHealth != null && _healthSlider != null)
-        {
-            _healthSlider.maxValue = _playerHealth.GetMaxHealth();
-            _healthSlider.value = _playerHealth.GetCurrentHealth();
-        }
-    }
+	private void Start()
+	{
+		_playerHealth.HealthChanged += OnHealthChanged;
+	}
 
-    private void Update()
-    {
-        if (_playerHealth != null && _healthSlider != null)
-        {
-            _healthSlider.value = _playerHealth.GetCurrentHealth();
-        }
-    }
+	private void OnHealthChanged(int currentHealth, int maxHealth)
+	{
+		if (_healthSlider == null)
+			return;
+
+		_healthSlider.fillAmount = currentHealth / maxHealth;
+	}
 }

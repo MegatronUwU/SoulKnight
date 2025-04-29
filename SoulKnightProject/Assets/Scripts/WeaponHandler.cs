@@ -9,7 +9,7 @@ public class WeaponHandler : MonoBehaviour
     {
         if (_currentWeapon != null && _renderer != null && _currentWeapon.CanShoot())
         {
-            _currentWeapon.Shoot(_renderer);
+            _currentWeapon.Shoot(_renderer, Team.Player);
         }
     }
 

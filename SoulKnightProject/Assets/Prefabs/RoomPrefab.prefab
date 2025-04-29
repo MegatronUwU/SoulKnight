@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 8922703095751359914}
   - component: {fileID: 2292504440081005307}
   - component: {fileID: 4055302507889740394}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,9 +263,6 @@ GameObject:
   - component: {fileID: 6202380885431505347}
   - component: {fileID: 891545835009068740}
   - component: {fileID: 1692242983019978706}
-  - component: {fileID: 1907031691079063847}
-  - component: {fileID: 6211991998486638979}
-  - component: {fileID: 4796597982681968167}
   m_Layer: 0
   m_Name: RoomPrefab
   m_TagString: Untagged
@@ -332,80 +329,6 @@ MonoBehaviour:
     doorTransform: {fileID: 98731922956668122}
     Wall: {fileID: 4261370340070625092}
     Door: {fileID: 7108065785761375413}
---- !u!33 &1907031691079063847
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2693236302305355825}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6211991998486638979
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2693236302305355825}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4796597982681968167
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2693236302305355825}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3631645155060117488
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +341,7 @@ GameObject:
   - component: {fileID: 1231178512072909928}
   - component: {fileID: 4718565688167712084}
   - component: {fileID: 7895028114750881667}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -526,7 +449,7 @@ GameObject:
   - component: {fileID: 3018504528587881010}
   - component: {fileID: 8065979835055185756}
   - component: {fileID: 520029833592163422}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +557,7 @@ GameObject:
   - component: {fileID: 8944704293725562949}
   - component: {fileID: 6057110964047267389}
   - component: {fileID: 194228296899061704}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -804,7 +727,7 @@ GameObject:
   - component: {fileID: 910616920926323235}
   - component: {fileID: 1660920137287455335}
   - component: {fileID: 734959738215093635}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -912,7 +835,7 @@ GameObject:
   - component: {fileID: 3674810221665575480}
   - component: {fileID: 6313417141610743802}
   - component: {fileID: 8268724233751760035}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1021,7 +944,7 @@ GameObject:
   - component: {fileID: 5757128547655659073}
   - component: {fileID: 4357223289815980502}
   - component: {fileID: 8675328759911180384}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1201,7 +1124,7 @@ GameObject:
   - component: {fileID: 4780878187501180125}
   - component: {fileID: 6237791931781739833}
   - component: {fileID: 9100937927449311483}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1309,7 +1232,7 @@ GameObject:
   - component: {fileID: 1827963692169505280}
   - component: {fileID: 6982047854655430153}
   - component: {fileID: 7921613566416997638}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1417,7 +1340,7 @@ GameObject:
   - component: {fileID: 8088174641050823365}
   - component: {fileID: 9015371620753389246}
   - component: {fileID: 4224974373577319517}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1526,7 +1449,7 @@ GameObject:
   - component: {fileID: 1292948414284727784}
   - component: {fileID: 6486847865133197028}
   - component: {fileID: 2550564434201594519}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1634,7 +1557,7 @@ GameObject:
   - component: {fileID: 2088047770119263816}
   - component: {fileID: 1509533819147789948}
   - component: {fileID: 8640723669873573830}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door_Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}

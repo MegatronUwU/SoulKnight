@@ -135,6 +135,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _lifetime: 2
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!54 &5071492492985701839
 Rigidbody:
   m_ObjectHideFlags: 0

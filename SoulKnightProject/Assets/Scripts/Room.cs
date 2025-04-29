@@ -93,15 +93,6 @@ public class Room : MonoBehaviour
 
         return _spawnArea.position + randomPoint;
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("PlayerProjectile"))
-        {
-            Destroy(gameObject); 
-            Destroy(other.gameObject); 
-        }
-    }
 }
 
 // Les Type de room

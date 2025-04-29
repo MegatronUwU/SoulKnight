@@ -18,9 +18,9 @@ public class PlayerAttack : MonoBehaviour
 
         _lastFireTime = Time.time;
 
-        Vector3 spawnPos = _renderer.position + _renderer.forward * _projectileSpawnOffset;
-        Projectile projectile = Instantiate(_projectilePrefab, spawnPos, Quaternion.identity);
+        //Vector3 spawnPos = _renderer.position + _renderer.forward * _projectileSpawnOffset;
+        //Projectile projectile = Instantiate(_projectilePrefab, spawnPos, Quaternion.identity);
 
-        projectile.Initialize(_renderer.forward);
+        //projectile.Initialize(_renderer.forward, Team.Player);
     }
 }

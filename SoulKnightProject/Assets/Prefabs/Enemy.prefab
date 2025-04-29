@@ -57,7 +57,6 @@ GameObject:
   - component: {fileID: 584024907705209565}
   - component: {fileID: 4206009882720626047}
   - component: {fileID: 7773251425758100583}
-  - component: {fileID: 8210228211501852627}
   - component: {fileID: 7919670118413018333}
   - component: {fileID: 5149027748694636982}
   m_Layer: 0
@@ -132,24 +131,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 1
---- !u!114 &8210228211501852627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1166476313829008580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cff5bbcf4b46b014e8c33cec36291464, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: 9153541436210976379, guid: eb2329cf65ac4244c9b9931f08c8d075, type: 3}
-  _projectileSpeed: 10
-  _projectileLifetime: 2
-  _fireCooldown: 0.5
-  _projectileSpawnOffset: 1
-  _renderer: {fileID: 6660051090350545948}
 --- !u!114 &7919670118413018333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +174,7 @@ MonoBehaviour:
   _renderer: {fileID: 6660051090350545948}
   _weaponData: {fileID: 11400000, guid: 98e0146de3cc46d4cb9e6377a095e34f, type: 2}
   _moveSpeed: 3
+  _playerReferenceData: {fileID: 11400000, guid: 0a314d963fa5332469c0311aa495adfd, type: 2}
 --- !u!1 &4955532500343237764
 GameObject:
   m_ObjectHideFlags: 0

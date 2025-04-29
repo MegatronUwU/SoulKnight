@@ -14,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
         if (direction.magnitude > 0.1f)
         {
 			_renderer.forward = direction.normalized;
-            transform.Translate(direction * _moveSpeed * Time.deltaTime);
+            transform.Translate(_moveSpeed * Time.deltaTime * direction);
+            //GetComponent<Rigidbody>().linearVelocity = _moveSpeed * Time.deltaTime * direction;
         }
     }
 }
