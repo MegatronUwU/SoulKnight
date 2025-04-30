@@ -272,6 +272,94 @@ MonoBehaviour:
   _target: {fileID: 1030839371}
   _offset: {x: 0, y: 15, z: -10}
   _followSpeed: 5
+--- !u!1001 &378600916
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3759563694621691407, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759563694621691407, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759563694621691407, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 110.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759563694621691407, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759563694621691407, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759563694621691407, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759563694621691407, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759563694621691407, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759563694621691407, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759563694621691407, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568752213137151157, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_Name
+      value: NGF_Env_Stone_doorway_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568752213137151157, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3721695400665344483, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2809742037237245891, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 378600918}
+  m_SourcePrefab: {fileID: 100100000, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+--- !u!1 &378600917 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2809742037237245891, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+  m_PrefabInstance: {fileID: 378600916}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &378600918
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378600917}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 36bbdd661786ec346aabc3771a359891, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 36bbdd661786ec346aabc3771a359891, type: 2}
+  - {fileID: 7400000, guid: a13f4c3ef0876df41946019344628ca4, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roomPrefab: {fileID: 891545835009068740, guid: b401987be1fd90a459b9df199a5f24d6, type: 3}
   _pathLength: 25
-  _roomSpacing: 12
+  _roomSpacing: 25
   _dungeonParent: {fileID: 1695536907}
   _corridorPrefab: {fileID: 8926578685659555167, guid: d4b1db6723690224a9e7bd638f5c2036, type: 3}
   _normalRoomConfiguration: {fileID: 11400000, guid: 4641b33b119d4c74494910e44c8b095f, type: 2}
@@ -2189,3 +2277,4 @@ SceneRoots:
   - {fileID: 763544257}
   - {fileID: 1695536907}
   - {fileID: 2100912411}
+  - {fileID: 378600916}

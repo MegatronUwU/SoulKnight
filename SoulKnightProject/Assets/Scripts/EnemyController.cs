@@ -33,10 +33,10 @@ public class EnemyController : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector3 targetPosition = _playerTransform.position;
-        Vector3 directionToPlayer = targetPosition - transform.position;
-        float distance = directionToPlayer.magnitude;
-        Vector3 direction = directionToPlayer.normalized;
+        Vector3 playerPosition = _playerTransform.position;
+        Vector3 directionToPlayer = playerPosition - transform.position;
+        Vector3 directionToPlayerNormalized = directionToPlayer.normalized;
+        float distanceToPlayer = directionToPlayer.magnitude;
 
         if (_currentRoomConnector != null && !IsPlayerInSameRoom())
         {
@@ -45,18 +45,18 @@ public class EnemyController : MonoBehaviour
 
             if (doorWaypoint != null)
             {
-                targetPosition = doorWaypoint.position;
-                direction = (targetPosition - transform.position).normalized;
+                playerPosition = doorWaypoint.position;
+                directionToPlayerNormalized = (playerPosition - transform.position).normalized;
             }
         }
 
-        if (distance > _stoppingDistance)
-            transform.position += direction * _moveSpeed * Time.deltaTime;
-        else if (distance < _retreatDistance)
-            transform.position -= direction * _moveSpeed * Time.deltaTime;
+        if (distanceToPlayer > _stoppingDistance)
+            transform.position += _moveSpeed * Time.deltaTime * directionToPlayerNormalized;
+        else if (distanceToPlayer < _retreatDistance)
+            transform.position -= _moveSpeed * Time.deltaTime * directionToPlayerNormalized;
 
-        if (_renderer != null && direction != Vector3.zero)
-            _renderer.forward = direction;
+        if (_renderer != null && directionToPlayerNormalized != Vector3.zero)
+            _renderer.forward = directionToPlayerNormalized;
     }
 
 
@@ -79,8 +79,9 @@ public class EnemyController : MonoBehaviour
 
     private bool IsPlayerInSameRoom()
     {
-        Vector3Int enemyGridPos = Vector3Int.RoundToInt(transform.position / 12f); 
-        Vector3Int playerGridPos = Vector3Int.RoundToInt(_playerTransform.position / 12f);
+        //TODO: Swich "25f" room size to a ScriptableObject
+        Vector3Int enemyGridPos = Vector3Int.RoundToInt(transform.position / 25f); 
+        Vector3Int playerGridPos = Vector3Int.RoundToInt(_playerTransform.position / 25f);
 
         return enemyGridPos == playerGridPos;
     }

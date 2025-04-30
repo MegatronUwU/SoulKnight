@@ -16,6 +16,6 @@ public class PlayerHealthBar : MonoBehaviour
 		if (_healthSlider == null)
 			return;
 
-		_healthSlider.fillAmount = currentHealth / maxHealth;
+		_healthSlider.fillAmount = (float)currentHealth / maxHealth;
 	}
 }
