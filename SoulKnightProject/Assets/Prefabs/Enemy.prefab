@@ -129,7 +129,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 116
   m_CollisionDetection: 1
 --- !u!114 &7919670118413018333
 MonoBehaviour:
@@ -174,6 +174,9 @@ MonoBehaviour:
   _renderer: {fileID: 6660051090350545948}
   _weaponData: {fileID: 11400000, guid: 98e0146de3cc46d4cb9e6377a095e34f, type: 2}
   _moveSpeed: 3
+  _shootOffset: 1
+  _stoppingDistance: 7
+  _retreatDistance: 3
   _playerReferenceData: {fileID: 11400000, guid: 0a314d963fa5332469c0311aa495adfd, type: 2}
 --- !u!1 &4955532500343237764
 GameObject:
