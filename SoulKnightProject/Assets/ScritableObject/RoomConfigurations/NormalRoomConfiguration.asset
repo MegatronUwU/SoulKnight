@@ -16,4 +16,4 @@ MonoBehaviour:
   PossibleObjectsToSpawn: []
   MaxEnemiesCount: 3
   PossibleEnemiesToSpawn:
-  - {fileID: 0}
+  - {fileID: 1166476313829008580, guid: 382b8f2f7c676af42ad2ed0dd87fd47a, type: 3}

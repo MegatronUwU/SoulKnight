@@ -56,7 +56,7 @@ public class Room : MonoBehaviour
 
     private IEnumerator CheckEnemiesCoroutine()
     {
-        while (_spawnedEnemies.Exists(e => e != null))
+        while (_spawnedEnemies.Exists(e => e != null && e.activeInHierarchy))
         {
             yield return new WaitForSeconds(1f);
         }
