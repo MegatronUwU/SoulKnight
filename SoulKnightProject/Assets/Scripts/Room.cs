@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Room : MonoBehaviour
@@ -11,10 +12,20 @@ public class Room : MonoBehaviour
 
     //private RoomType _roomType = RoomType.Normal;
 
+    private bool _activated = false;
+    private List<GameObject> _spawnedEnemies = new();
+    private RoomConfiguration _configuration;
+    private RoomConnector _connector;
+
+    private void Awake()
+    {
+        _connector = GetComponent<RoomConnector>();
+    }
+
     public void InitializeRoom(RoomConfiguration configuration)
     {
+        _configuration = configuration;
         SpawnObjects(configuration.MaxObjectsCount, configuration.PossibleObjectsToSpawn);
-        SpawnEnemies(configuration.MaxEnemiesCount, configuration.PossibleEnemiesToSpawn);
 
         //switch (_roomType)
         //{
@@ -33,12 +44,32 @@ public class Room : MonoBehaviour
         //}
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_activated || !other.CompareTag("Player")) return;
+
+        _activated = true;
+        _connector.CloseAllDoors(); // active portes + bloque les colliders
+        SpawnEnemies(_configuration.MaxEnemiesCount, _configuration.PossibleEnemiesToSpawn);
+        StartCoroutine(CheckEnemiesCoroutine());
+    }
+
+    private IEnumerator CheckEnemiesCoroutine()
+    {
+        while (_spawnedEnemies.Exists(e => e != null))
+        {
+            yield return new WaitForSeconds(1f);
+        }
+
+        _connector.OpenAllDoors(); 
+    }
+
     private void SpawnObjects(int maxObjectsCount, GameObject[] objects)
     {
         if (maxObjectsCount == 0)
             return;
 
-		int objectsCount = Random.Range(0, maxObjectsCount);
+        int objectsCount = Random.Range(0, maxObjectsCount);
 
         for (int i = 0; i < objectsCount; i++)
         {
@@ -52,18 +83,19 @@ public class Room : MonoBehaviour
 
     private void SpawnEnemies(int maxEnemiesCount, GameObject[] enemies)
     {
-		if (maxEnemiesCount == 0)
-			return;
+        if (maxEnemiesCount == 0)
+            return;
 
-		int enemiesCount = Random.Range(0, maxEnemiesCount);
+        int enemiesCount = Random.Range(0, maxEnemiesCount);
 
-		for (int i = 0; i < enemiesCount; i++)
+        for (int i = 0; i < enemiesCount; i++)
         {
             if (enemies.Length == 0) return;
 
             GameObject enemy = enemies[Random.Range(0, enemies.Length)];
             Vector3 spawnPos = GetRandomPositionInArea();
-            Instantiate(enemy, spawnPos, Quaternion.identity, transform);
+            GameObject instance = Instantiate(enemy, spawnPos, Quaternion.identity, transform);
+            _spawnedEnemies.Add(instance);
         }
     }
 
@@ -125,7 +157,6 @@ public static class RoomFactory
 }
 
 RoomConfig config = RoomFactory.CreateRoom()
-	.SetMaxEnemyCount(12)
-	.SetMaxTreasureCount(8);
-
+    .SetMaxEnemyCount(12)
+    .SetMaxTreasureCount(8);
 */

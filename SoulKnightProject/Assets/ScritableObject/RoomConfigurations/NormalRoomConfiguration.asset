@@ -15,4 +15,5 @@ MonoBehaviour:
   MaxObjectsCount: 5
   PossibleObjectsToSpawn: []
   MaxEnemiesCount: 3
-  PossibleEnemiesToSpawn: []
+  PossibleEnemiesToSpawn:
+  - {fileID: 0}
