@@ -7,10 +7,10 @@ public class WeaponHandler : MonoBehaviour
 
     public void TriggerAttack()
     {
-        if (_currentWeapon != null && _renderer != null && _currentWeapon.CanShoot())
-        {
-            _currentWeapon.Shoot(_renderer, Team.Player);
-        }
+        //if (_currentWeapon != null && _renderer != null && _currentWeapon.CanShoot())
+        //{
+        //    _currentWeapon.Shoot(_renderer, Team.Player);
+        //}
         ShootAuto();
     }
 
@@ -21,19 +21,23 @@ public class WeaponHandler : MonoBehaviour
 
     public void ShootAuto()
     {
-        Transform target = FindClosestEnemy();
-        if (target == null || _currentWeapon == null || !_currentWeapon.CanShoot())
+        if (_currentWeapon == null || !_currentWeapon.CanShoot())
             return;
 
-        Vector3 direction = (target.position - _renderer.position).normalized;
-        _renderer.forward = direction;
+        if(TryFindClosestEnemy(out Transform target))
+        {
+			Vector3 direction = (target.position - _renderer.position).normalized;
+			_renderer.forward = direction;
+		}
+
         _currentWeapon.Shoot(_renderer, Team.Player);
     }
 
-    private Transform FindClosestEnemy()
+    private bool TryFindClosestEnemy(out Transform closestEnemy)
     {
+        //TODO: Replace with enemy list in room
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        Transform closest = null;
+		closestEnemy = null;
         float shortestDistance = Mathf.Infinity;
 
         foreach (GameObject enemy in enemies)
@@ -42,10 +46,13 @@ public class WeaponHandler : MonoBehaviour
             if (distance < shortestDistance)
             {
                 shortestDistance = distance;
-                closest = enemy.transform;
+				closestEnemy = enemy.transform;
             }
         }
 
-        return closest;
+        if (closestEnemy != null)
+            return true;
+
+        return false;
     }
 }

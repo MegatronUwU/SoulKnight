@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6ecba9d146454447a54c8c5ca2b30c3, type: 3}
-  m_Name: NormalRoomConfiguration
+  m_Name: SafeRoomConfiguration
   m_EditorClassIdentifier: 
-  MaxObjectsCount: 5
+  MaxObjectsCount: 0
   PossibleObjectsToSpawn: []
-  MaxEnemiesCount: 3
-  PossibleEnemiesToSpawn:
-  - {fileID: 6404224640746736466, guid: 382b8f2f7c676af42ad2ed0dd87fd47a, type: 3}
+  MaxEnemiesCount: 0
+  PossibleEnemiesToSpawn: []

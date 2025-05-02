@@ -336,6 +336,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2809742037237245891, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
       insertIndex: -1
       addedObject: {fileID: 378600918}
+    - targetCorrespondingSourceObject: {fileID: 2809742037237245891, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 378600922}
   m_SourcePrefab: {fileID: 100100000, guid: c2cd89bb142b3de44835f854c6e96102, type: 3}
 --- !u!1 &378600917 stripped
 GameObject:
@@ -360,6 +363,28 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!95 &378600922
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378600917}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc08f5195a873a440bd24719ac209361, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +676,7 @@ MonoBehaviour:
   _roomSpacing: 25
   _dungeonParent: {fileID: 1695536907}
   _corridorPrefab: {fileID: 8926578685659555167, guid: d4b1db6723690224a9e7bd638f5c2036, type: 3}
+  _safeRoomConfiguration: {fileID: 11400000, guid: bd1ad98ab27ae0e49bd7a92b5b59c9e6, type: 2}
   _normalRoomConfiguration: {fileID: 11400000, guid: 4641b33b119d4c74494910e44c8b095f, type: 2}
   _treasureRoomConfiguration: {fileID: 11400000, guid: 4641b33b119d4c74494910e44c8b095f, type: 2}
   _bossRoomConfiguration: {fileID: 11400000, guid: 4641b33b119d4c74494910e44c8b095f, type: 2}
@@ -2082,7 +2108,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1166476313829008580, guid: 382b8f2f7c676af42ad2ed0dd87fd47a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4955532500343237764, guid: 382b8f2f7c676af42ad2ed0dd87fd47a, type: 3}
       propertyPath: m_Layer

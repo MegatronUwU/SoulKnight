@@ -7,10 +7,22 @@ public class RoomConnector : MonoBehaviour
     private void Awake()
     {
         foreach (DoorAnchor doorAnchor in _doorAnchors)
-            doorAnchor.Door.SetActive(false);
+            doorAnchor.Door.gameObject.SetActive(false);
     }
 
-    public Transform GetDoorWaypointTransform(Direction direction)
+    public void InitializeDoors(Room room)
+    {
+        foreach(DoorAnchor doorAnchor in _doorAnchors)
+        {
+            if (doorAnchor.Door == null)
+                continue;
+
+            doorAnchor.Door.Initialize(room);
+        }
+    }
+
+
+	public Transform GetDoorWaypointTransform(Direction direction)
     {
         foreach (DoorAnchor anchor in _doorAnchors)
         {
@@ -40,7 +52,7 @@ public class RoomConnector : MonoBehaviour
             return;
 
         Destroy(anchor.Wall);
-        anchor.Door.SetActive(true);
+        anchor.Door.gameObject.SetActive(true);
     }
 
     public void CloseAllDoors()
@@ -48,40 +60,18 @@ public class RoomConnector : MonoBehaviour
         foreach (DoorAnchor anchor in _doorAnchors)
         {
             if (anchor.Door != null)
-            {
-                anchor.Door.SetActive(true);
-
-                var col = anchor.Door.GetComponent<Collider>();
-                if (col != null) col.enabled = true;
-
-                var animator = anchor.Door.GetComponent<Animator>();
-                if (animator != null) animator.SetTrigger("Close");
-            }
-
-            if (anchor.Wall != null)
-                anchor.Wall.SetActive(false);
+                anchor.Door.CloseDoor();
         }
     }
 
     public void OpenAllDoors()
     {
-        foreach (DoorAnchor anchor in _doorAnchors)
-        {
-            if (anchor.Door != null)
-            {
-                var col = anchor.Door.GetComponent<Collider>();
-                if (col != null) col.enabled = false;
-
-                var animator = anchor.Door.GetComponent<Animator>();
-                if (animator != null) animator.SetTrigger("Open");
-
-                anchor.Door.SetActive(false);
-            }
-
-            if (anchor.Wall != null)
-                anchor.Wall.SetActive(true);
-        }
-    }
+		foreach (DoorAnchor anchor in _doorAnchors)
+		{
+			if (anchor.Door != null)
+				anchor.Door.OpenDoor();
+		}
+	}
 
     [System.Serializable]
     public class DoorAnchor
@@ -89,7 +79,7 @@ public class RoomConnector : MonoBehaviour
         public Direction direction;
         public Transform doorTransform;
         public GameObject Wall;
-        public GameObject Door;
+        public Door Door;
     }
 }
 

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3048804989151968834}
   - component: {fileID: 1927960138315844932}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WeaponHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,11 +55,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 584024907705209565}
+  - component: {fileID: 6404224640746736466}
   - component: {fileID: 4206009882720626047}
   - component: {fileID: 7773251425758100583}
   - component: {fileID: 7919670118413018333}
   - component: {fileID: 5149027748694636982}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -83,6 +84,19 @@ Transform:
   - {fileID: 3048804989151968834}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6404224640746736466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166476313829008580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157d9dda987563549a3090f0e327a2a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 7919670118413018333}
 --- !u!65 &4206009882720626047
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -189,7 +203,7 @@ GameObject:
   - component: {fileID: 6660051090350545948}
   - component: {fileID: 5392382320931748468}
   - component: {fileID: 3056251916591282497}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

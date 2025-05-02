@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class DungeonPathGenerator : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class DungeonPathGenerator : MonoBehaviour
 
     private readonly List<RoomData> _roomDatas = new();
 
+    [SerializeField] private RoomConfiguration _safeRoomConfiguration = null;
     [SerializeField] private RoomConfiguration _normalRoomConfiguration = null;
     [SerializeField] private RoomConfiguration _treasureRoomConfiguration = null;
     [SerializeField] private RoomConfiguration _bossRoomConfiguration = null;
@@ -20,8 +22,8 @@ public class DungeonPathGenerator : MonoBehaviour
 	private void Start()
     {
         GeneratePath();
-        //TryMergeBigRoom();
         FindRoomsNeighbours(); 
+        //TryMergeBigRoom();
         SpawnRooms();
         PopulateRooms();
     }
@@ -31,8 +33,7 @@ public class DungeonPathGenerator : MonoBehaviour
         Vector3 currentPosition = Vector3.zero;
         //_roomDatas.Add(new RoomData(currentPosition));
         RoomData startRoom = new RoomData(currentPosition);
-        startRoom.Configuration = _normalRoomConfiguration;
-        startRoom.IsSafeRoom = true;
+        startRoom.Configuration = _safeRoomConfiguration;
         _roomDatas.Add(startRoom);
 
         for (int i = 1; i < _pathLength; i++)
@@ -135,7 +136,7 @@ public class DungeonPathGenerator : MonoBehaviour
         foreach(RoomData data in _roomDatas)
         {
             //data.InstantiatedRoom.InitializeRoom(_normalRoomConfiguration);
-            data.InstantiatedRoom.InitializeRoom(data.Configuration, data.IsSafeRoom);
+            data.InstantiatedRoom.InitializeRoom(data.Configuration);
         }
     }
 
@@ -212,37 +213,33 @@ public class DungeonPathGenerator : MonoBehaviour
         };
     }
 
-    //private void TryMergeBigRoom()
-    //{
-    //    for (int i = 0; i < _roomDatas.Count; i++)
-    //    {
-    //        Vector3 pos = _roomDatas[i].Position;
+    private void TryMergeBigRoom()
+    {
+        for (int i = 0; i < _roomDatas.Count; i++)
+        {
+            //TODO: Use neighbours
+            Vector3 pos = _roomDatas[i].Position;
 
-    //        RoomData right = _roomDatas.FirstOrDefault(r => r.Position == pos + Vector3.right * _roomSpacing);
-    //        RoomData up = _roomDatas.FirstOrDefault(r => r.Position == pos + Vector3.forward * _roomSpacing);
-    //        RoomData diag = _roomDatas.FirstOrDefault(r => r.Position == pos + (Vector3.right + Vector3.forward) * _roomSpacing);
+            RoomData right = _roomDatas.FirstOrDefault(r => r.Position == pos + Vector3.right * _roomSpacing);
+            RoomData up = _roomDatas.FirstOrDefault(r => r.Position == pos + Vector3.forward * _roomSpacing);
+            RoomData diag = _roomDatas.FirstOrDefault(r => r.Position == pos + (Vector3.right + Vector3.forward) * _roomSpacing);
 
-    //        if (right != null && up != null && diag != null)
-    //        {
-    //            MergeRoomsToBigRoom(_roomDatas[i], right, up, diag);
-    //            break;
-    //        }
-    //    }
-    //}
+            if (right != null && up != null && diag != null)
+            {
+                MergeRoomsToBigRoom(_roomDatas[i], right, up, diag);
+                break;
+            }
+        }
+    }
 
-    //private void MergeRoomsToBigRoom(RoomData a, RoomData b, RoomData c, RoomData d)
-    //{
-    //    a.Configuration = _bossRoomConfiguration;
-    //    b.Configuration = _bossRoomConfiguration;
-    //    c.Configuration = _bossRoomConfiguration;
-    //    d.Configuration = _bossRoomConfiguration;
-
-    //    a.IsMergedToBigRoom = true;
-    //    b.IsMergedToBigRoom = true;
-    //    c.IsMergedToBigRoom = true;
-    //    d.IsMergedToBigRoom = true;
-
-    //}
+    private void MergeRoomsToBigRoom(params RoomData[] roomDatas)
+    {
+        foreach(RoomData roomData in roomDatas)
+        {
+            roomData.Configuration = _bossRoomConfiguration;
+            roomData.IsMergedToBigRoom = true;
+        }
+    }
 
     private class RoomData
     {
@@ -251,9 +248,7 @@ public class DungeonPathGenerator : MonoBehaviour
         public Dictionary<Direction, RoomData> Neighbours = new();
         public Room InstantiatedRoom = null;
         public RoomConfiguration Configuration;
-        public bool IsSafeRoom = false;
         public bool IsMergedToBigRoom = false;
-
 
         public RoomData(Vector3 pos)
         {

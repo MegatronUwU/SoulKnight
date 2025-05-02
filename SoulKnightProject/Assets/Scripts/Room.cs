@@ -13,22 +13,21 @@ public class Room : MonoBehaviour
     //private RoomType _roomType = RoomType.Normal;
 
     private bool _activated = false;
-    private List<GameObject> _spawnedEnemies = new();
+    private int _enemiesCount = 0;
     private RoomConfiguration _configuration;
     private RoomConnector _connector;
-
-    private bool _isSafeRoom = false;
-    private bool isSafe;
 
     private void Awake()
     {
         _connector = GetComponent<RoomConnector>();
     }
 
-    public void InitializeRoom(RoomConfiguration configuration, bool IsSafe = false)
+    public void InitializeRoom(RoomConfiguration configuration)
     {
         _configuration = configuration;
-        _isSafeRoom = isSafe;
+
+        _connector.InitializeDoors(this);
+
         SpawnObjects(configuration.MaxObjectsCount, configuration.PossibleObjectsToSpawn);
 
         //switch (_roomType)
@@ -48,25 +47,28 @@ public class Room : MonoBehaviour
         //}
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void StartRoom()
     {
-        if (_activated || !other.CompareTag("Player") || _isSafeRoom) return;
-
+        if (_activated) return;
         _activated = true;
+
+        if(_configuration.MaxEnemiesCount <= 0)
+            return;
+
         _connector.CloseAllDoors(); // active portes + bloque les colliders
         SpawnEnemies(_configuration.MaxEnemiesCount, _configuration.PossibleEnemiesToSpawn);
-        StartCoroutine(CheckEnemiesCoroutine());
+        //StartCoroutine(CheckEnemiesCoroutine());
     }
 
-    private IEnumerator CheckEnemiesCoroutine()
-    {
-        while (_spawnedEnemies.Exists(e => e != null && e.activeInHierarchy))
-        {
-            yield return new WaitForSeconds(1f);
-        }
+    //private IEnumerator CheckEnemiesCoroutine()
+    //{
+    //    while (_spawnedEnemies.Exists(e => e != null && e.activeInHierarchy))
+    //    {
+    //        yield return new WaitForSeconds(1f);
+    //    }
 
-        _connector.OpenAllDoors(); 
-    }
+    //    _connector.OpenAllDoors(); 
+    //}
 
     private void SpawnObjects(int maxObjectsCount, GameObject[] objects)
     {
@@ -85,45 +87,58 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void SpawnEnemies(int maxEnemiesCount, GameObject[] enemies)
+    private void SpawnEnemies(int maxEnemiesCount, Enemy[] enemies)
     {
         if (maxEnemiesCount == 0)
             return;
 
-        int enemiesCount = Random.Range(0, maxEnemiesCount);
+		_enemiesCount = Random.Range(1, maxEnemiesCount);
 
-        for (int i = 0; i < enemiesCount; i++)
+        for (int i = 0; i < _enemiesCount; i++)
         {
             if (enemies.Length == 0) return;
 
-            GameObject enemy = enemies[Random.Range(0, enemies.Length)];
+            Enemy enemy = enemies[Random.Range(0, enemies.Length)];
+
+            //TODO: Use predefined enemy spawn positions
             Vector3 spawnPos = GetRandomPositionInArea();
-            GameObject instance = Instantiate(enemy, spawnPos, Quaternion.identity, transform);
-            _spawnedEnemies.Add(instance);
-        }
+
+            Enemy instance = Instantiate(enemy, spawnPos, Quaternion.identity, transform);
+            instance.Health.OnDeath.AddListener(OnEnemyDeath);
+		}
     }
 
-    //private void SpawnTreasure()
-    //{
-    //    Debug.Log("Spawn coffre");
-    //    // TODO Prefabs de coffre
-    //}
+    private void OnEnemyDeath()
+    {
+        _enemiesCount--;
 
-    //private void SpawnBoss()
-    //{
-    //    Debug.Log("Spawn boss");
-    //    // TODO Prefabs de boss
-    //}
+        if(_enemiesCount > 0)
+            return;
 
-    // On récupère une position aléatoire dans la zone de spawn
-    private Vector3 GetRandomPositionInArea()
+		_connector.OpenAllDoors(); 
+	}
+
+	//private void SpawnTreasure()
+	//{
+	//    Debug.Log("Spawn coffre");
+	//    // TODO Prefabs de coffre
+	//}
+
+	//private void SpawnBoss()
+	//{
+	//    Debug.Log("Spawn boss");
+	//    // TODO Prefabs de boss
+	//}
+
+	// On récupère une position aléatoire dans la zone de spawn
+	private Vector3 GetRandomPositionInArea()
     {
         if (_spawnArea == null)
             _spawnArea = this.transform;
 
         Vector3 randomPoint = new Vector3(
             Random.Range(-_spawnArea.localScale.x / 2, _spawnArea.localScale.x / 2),
-            0f,
+            .5f,
             Random.Range(-_spawnArea.localScale.z / 2, _spawnArea.localScale.z / 2)
         );
 

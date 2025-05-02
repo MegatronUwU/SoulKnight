@@ -18,4 +18,10 @@ public class PlayerMovement : MonoBehaviour
             //GetComponent<Rigidbody>().linearVelocity = _moveSpeed * Time.deltaTime * direction;
         }
     }
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other.TryGetComponent(out Door door))
+            door.EnterRoom();
+	}
 }

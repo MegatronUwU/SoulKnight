@@ -7,5 +7,5 @@ public class RoomConfiguration : ScriptableObject
 	public GameObject[] PossibleObjectsToSpawn;
 
 	public int MaxEnemiesCount = 3;
-	public GameObject[] PossibleEnemiesToSpawn;
+	public Enemy[] PossibleEnemiesToSpawn;
 }
