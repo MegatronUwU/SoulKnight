@@ -17,14 +17,18 @@ public class Room : MonoBehaviour
     private RoomConfiguration _configuration;
     private RoomConnector _connector;
 
+    private bool _isSafeRoom = false;
+    private bool isSafe;
+
     private void Awake()
     {
         _connector = GetComponent<RoomConnector>();
     }
 
-    public void InitializeRoom(RoomConfiguration configuration)
+    public void InitializeRoom(RoomConfiguration configuration, bool IsSafe = false)
     {
         _configuration = configuration;
+        _isSafeRoom = isSafe;
         SpawnObjects(configuration.MaxObjectsCount, configuration.PossibleObjectsToSpawn);
 
         //switch (_roomType)
@@ -46,7 +50,7 @@ public class Room : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_activated || !other.CompareTag("Player")) return;
+        if (_activated || !other.CompareTag("Player") || _isSafeRoom) return;
 
         _activated = true;
         _connector.CloseAllDoors(); // active portes + bloque les colliders
