@@ -23,7 +23,7 @@ public class DungeonPathGenerator : MonoBehaviour
     {
         GeneratePath();
         FindRoomsNeighbours(); 
-        //TryMergeBigRoom();
+        TryMergeBigRoom();
         SpawnRooms();
         PopulateRooms();
     }
@@ -215,20 +215,21 @@ public class DungeonPathGenerator : MonoBehaviour
 
     private void TryMergeBigRoom()
     {
-        for (int i = 0; i < _roomDatas.Count; i++)
+        foreach (RoomData current in _roomDatas)
         {
-            //TODO: Use neighbours
-            Vector3 pos = _roomDatas[i].Position;
+            if (current.IsMergedToBigRoom)
+                continue;
 
-            RoomData right = _roomDatas.FirstOrDefault(r => r.Position == pos + Vector3.right * _roomSpacing);
-            RoomData up = _roomDatas.FirstOrDefault(r => r.Position == pos + Vector3.forward * _roomSpacing);
-            RoomData diag = _roomDatas.FirstOrDefault(r => r.Position == pos + (Vector3.right + Vector3.forward) * _roomSpacing);
+            if (!current.Neighbours.TryGetValue(Direction.Right, out RoomData right)) continue;
+            if (!current.Neighbours.TryGetValue(Direction.Up, out RoomData up)) continue;
 
-            if (right != null && up != null && diag != null)
-            {
-                MergeRoomsToBigRoom(_roomDatas[i], right, up, diag);
-                break;
-            }
+            if (!up.Neighbours.TryGetValue(Direction.Right, out RoomData upRight)) continue;
+
+            if (right.IsMergedToBigRoom || up.IsMergedToBigRoom || upRight.IsMergedToBigRoom)
+                continue;
+
+            MergeRoomsToBigRoom(current, right, up, upRight);
+            break; 
         }
     }
 
@@ -239,6 +240,8 @@ public class DungeonPathGenerator : MonoBehaviour
             roomData.Configuration = _bossRoomConfiguration;
             roomData.IsMergedToBigRoom = true;
         }
+
+        Debug.Log("Merge effectué");
     }
 
     private class RoomData

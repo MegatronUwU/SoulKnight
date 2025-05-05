@@ -679,7 +679,7 @@ MonoBehaviour:
   _safeRoomConfiguration: {fileID: 11400000, guid: bd1ad98ab27ae0e49bd7a92b5b59c9e6, type: 2}
   _normalRoomConfiguration: {fileID: 11400000, guid: 4641b33b119d4c74494910e44c8b095f, type: 2}
   _treasureRoomConfiguration: {fileID: 11400000, guid: 4641b33b119d4c74494910e44c8b095f, type: 2}
-  _bossRoomConfiguration: {fileID: 11400000, guid: 4641b33b119d4c74494910e44c8b095f, type: 2}
+  _bossRoomConfiguration: {fileID: 11400000, guid: 77a9de05dbed2704cbd7c45b46818494, type: 2}
 --- !u!4 &763544257
 Transform:
   m_ObjectHideFlags: 0
