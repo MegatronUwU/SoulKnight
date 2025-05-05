@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BossRoomConfiguration
   m_EditorClassIdentifier: 
   MaxObjectsCount: 5
-  PossibleObjectsToSpawn: []
+  PossibleObjectsToSpawn:
+  - {fileID: 5861806813518968075, guid: ed3be569bc1cc1942baeed1cb5a93d39, type: 3}
   MaxEnemiesCount: 0
   PossibleEnemiesToSpawn: []

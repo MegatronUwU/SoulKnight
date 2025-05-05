@@ -2,8 +2,10 @@
 
 public class WeaponHandler : MonoBehaviour
 {
-    [SerializeField] private Transform _renderer; 
+    [SerializeField] private Transform _renderer;
     [SerializeField] private WeaponData _currentWeapon;
+
+    private int _currentAmmo;
 
     public void TriggerAttack()
     {
@@ -17,27 +19,31 @@ public class WeaponHandler : MonoBehaviour
     public void SetWeapon(WeaponData newWeapon)
     {
         _currentWeapon = newWeapon;
+
+        if (_currentWeapon != null)
+            _currentAmmo = _currentWeapon.MaxAmmo;
     }
 
     public void ShootAuto()
     {
-        if (_currentWeapon == null || !_currentWeapon.CanShoot())
+        if (_currentWeapon == null || !_currentWeapon.CanShoot() || _currentAmmo <= 0)
             return;
 
-        if(TryFindClosestEnemy(out Transform target))
+        if (TryFindClosestEnemy(out Transform target))
         {
-			Vector3 direction = (target.position - _renderer.position).normalized;
-			_renderer.forward = direction;
-		}
+            Vector3 direction = (target.position - _renderer.position).normalized;
+            _renderer.forward = direction;
+        }
 
         _currentWeapon.Shoot(_renderer, Team.Player);
+        _currentAmmo--; 
     }
 
     private bool TryFindClosestEnemy(out Transform closestEnemy)
     {
         //TODO: Replace with enemy list in room
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-		closestEnemy = null;
+        closestEnemy = null;
         float shortestDistance = Mathf.Infinity;
 
         foreach (GameObject enemy in enemies)
@@ -46,7 +52,7 @@ public class WeaponHandler : MonoBehaviour
             if (distance < shortestDistance)
             {
                 shortestDistance = distance;
-				closestEnemy = enemy.transform;
+                closestEnemy = enemy.transform;
             }
         }
 
@@ -55,4 +61,14 @@ public class WeaponHandler : MonoBehaviour
 
         return false;
     }
+
+    public void AddAmmo(int amount)
+    {
+        if (_currentWeapon == null) return;
+
+        _currentAmmo += amount;
+        _currentAmmo = Mathf.Min(_currentAmmo, _currentWeapon.MaxAmmo);
+    }
+
+    public int GetCurrentAmmo() => _currentAmmo;
 }
