@@ -12,6 +12,8 @@ public class Health : MonoBehaviour
     public int CurrentHealth => _currentHealth;
     public bool IsDead => _currentHealth <= 0;
 
+    public bool IsFullHealth => _currentHealth == _maxHealth;
+
 	public UnityEvent OnDeath;
 
     public delegate void HealthChangedEventHandler(int currentHealth, int maxHealth);

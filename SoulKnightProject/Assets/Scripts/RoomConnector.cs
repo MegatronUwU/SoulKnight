@@ -74,17 +74,17 @@ public class RoomConnector : MonoBehaviour
 	}
 
     public void DestroyWall(Direction direction)
-    {
-        DoorAnchor anchor = GetDoorAnchorFromDirection(direction);
+	{
+		DoorAnchor anchor = GetDoorAnchorFromDirection(direction);
 
-        if (anchor != null && anchor.Wall != null)
-        {
-            Destroy(anchor.Wall);
-            anchor.Wall = null;
-        }
-    }
+		if (anchor == null || anchor.Door == null)
+			return;
 
-    [System.Serializable]
+		Destroy(anchor.Door.gameObject);
+		anchor.Door = null;
+	}
+
+	[System.Serializable]
     public class DoorAnchor
     {
         public Direction direction;
@@ -96,7 +96,10 @@ public class RoomConnector : MonoBehaviour
 
 public enum Direction
 {
-    Up, Down, Left, Right
+    Up,
+    Down,
+    Left,
+    Right,
 }
 
 // un peu rincé, j'arrive à comprendre le principes mais la manière de faire est un peu bizarre

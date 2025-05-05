@@ -23,8 +23,8 @@ public class DungeonPathGenerator : MonoBehaviour
     {
         GeneratePath();
         FindRoomsNeighbours(); 
-        TryMergeBigRoom();
         SpawnRooms();
+        TryMergeBigRoom();
         PopulateRooms();
     }
 
@@ -150,6 +150,8 @@ public class DungeonPathGenerator : MonoBehaviour
             Direction.Right => Direction.Left,
             _ => Direction.Down,
         };
+
+        //return (Direction)((int)(direction + 2) % 4);
 	}
 
 	// On cherche les connexions pour chaque pièce
@@ -229,7 +231,7 @@ public class DungeonPathGenerator : MonoBehaviour
                 continue;
 
             MergeRoomsToBigRoom(current, right, up, upRight);
-            break; 
+            break;
         }
     }
 
@@ -239,29 +241,31 @@ public class DungeonPathGenerator : MonoBehaviour
         {
             roomData.Configuration = _bossRoomConfiguration;
             roomData.IsMergedToBigRoom = true;
-        }
+		}
 
-        //RoomData current = roomDatas[0];
-        //RoomData right = roomDatas[1];
-        //RoomData up = roomDatas[2];
-        //RoomData upRight = roomDatas[3];
+		RoomData current = roomDatas[0];
+        RoomData right = roomDatas[1];
+        RoomData up = roomDatas[2];
+        RoomData upRight = roomDatas[3];
 
-        //RemoveWallsBetween(current, Direction.Right, right);
-        //RemoveWallsBetween(current, Direction.Up, up);
-        //RemoveWallsBetween(up, Direction.Right, upRight);
-        //RemoveWallsBetween(right, Direction.Up, upRight);
-
-        Debug.Log("Merge effectué");
+        RemoveWallsBetween(current, Direction.Right, right);
+        RemoveWallsBetween(current, Direction.Up, up);
+        RemoveWallsBetween(up, Direction.Right, upRight);
+        RemoveWallsBetween(right, Direction.Up, upRight);
     }
 
-    //private void RemoveWallsBetween(RoomData a, Direction dirToB, RoomData b)
-    //{
-    //    RoomConnector connectorA = a.InstantiatedRoom.GetComponent<RoomConnector>();
-    //    connectorA?.DestroyWall(dirToB);
+    private void RemoveWallsBetween(RoomData a, Direction dirToB, RoomData b)
+    {
+		RoomConnector connectorA = a.InstantiatedRoom.GetComponent<RoomConnector>();
 
-    //    RoomConnector connectorB = b.InstantiatedRoom.GetComponent<RoomConnector>();
-    //    connectorB?.DestroyWall(GetOppositeDirection(dirToB));
-    //}
+        if(connectorA != null)
+			connectorA.DestroyWall(dirToB);
+
+        RoomConnector connectorB = b.InstantiatedRoom.GetComponent<RoomConnector>();
+
+        if(connectorB != null)
+            connectorB.DestroyWall(GetOppositeDirection(dirToB));
+    }
 
     private class RoomData
     {
@@ -292,4 +296,3 @@ public class DungeonPathGenerator : MonoBehaviour
 		}
 	}
 }
-

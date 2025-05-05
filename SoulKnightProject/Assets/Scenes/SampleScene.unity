@@ -1190,7 +1190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43eea651e5074314b89534153cdcdec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
+  _moveSpeed: 5.5
   _joystick: {fileID: 7937038238981812394}
   _rigidbody: {fileID: 1030839373}
   _renderer: {fileID: 1810526222}
@@ -1267,6 +1267,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerReferenceData: {fileID: 11400000, guid: 0a314d963fa5332469c0311aa495adfd, type: 2}
+  PlayerHealth: {fileID: 1030839376}
+  PlayerWeaponHandler: {fileID: 1332197401}
 --- !u!1 &1114578373
 GameObject:
   m_ObjectHideFlags: 0
