@@ -241,8 +241,27 @@ public class DungeonPathGenerator : MonoBehaviour
             roomData.IsMergedToBigRoom = true;
         }
 
+        //RoomData current = roomDatas[0];
+        //RoomData right = roomDatas[1];
+        //RoomData up = roomDatas[2];
+        //RoomData upRight = roomDatas[3];
+
+        //RemoveWallsBetween(current, Direction.Right, right);
+        //RemoveWallsBetween(current, Direction.Up, up);
+        //RemoveWallsBetween(up, Direction.Right, upRight);
+        //RemoveWallsBetween(right, Direction.Up, upRight);
+
         Debug.Log("Merge effectué");
     }
+
+    //private void RemoveWallsBetween(RoomData a, Direction dirToB, RoomData b)
+    //{
+    //    RoomConnector connectorA = a.InstantiatedRoom.GetComponent<RoomConnector>();
+    //    connectorA?.DestroyWall(dirToB);
+
+    //    RoomConnector connectorB = b.InstantiatedRoom.GetComponent<RoomConnector>();
+    //    connectorB?.DestroyWall(GetOppositeDirection(dirToB));
+    //}
 
     private class RoomData
     {

@@ -73,6 +73,17 @@ public class RoomConnector : MonoBehaviour
 		}
 	}
 
+    public void DestroyWall(Direction direction)
+    {
+        DoorAnchor anchor = GetDoorAnchorFromDirection(direction);
+
+        if (anchor != null && anchor.Wall != null)
+        {
+            Destroy(anchor.Wall);
+            anchor.Wall = null;
+        }
+    }
+
     [System.Serializable]
     public class DoorAnchor
     {
