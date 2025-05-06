@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Room : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Room : MonoBehaviour
     //[SerializeField] private int _maxObjects = 5;
     //[SerializeField] private int _maxEnemies = 3;
     [SerializeField] private Transform _spawnArea;
+    [SerializeField] private Transform _enemySpawnPointsParent;
+    private List<Transform> _enemySpawnPoints = new();
 
     //private RoomType _roomType = RoomType.Normal;
 
@@ -20,6 +23,9 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         _connector = GetComponent<RoomConnector>();
+        _enemySpawnPoints = _enemySpawnPointsParent.GetComponentsInChildren<Transform>()
+            .Where(t => t != _enemySpawnPointsParent)
+            .ToList();
     }
 
     public void InitializeRoom(RoomConfiguration configuration)
@@ -92,20 +98,21 @@ public class Room : MonoBehaviour
         if (maxEnemiesCount == 0)
             return;
 
-		_enemiesCount = Random.Range(1, maxEnemiesCount);
+        _enemiesCount = Random.Range(1, maxEnemiesCount);
 
         for (int i = 0; i < _enemiesCount; i++)
         {
             if (enemies.Length == 0) return;
+            if (_enemySpawnPoints.Count == 0) return;
 
             Enemy enemy = enemies[Random.Range(0, enemies.Length)];
 
-            //TODO: Use predefined enemy spawn positions
-            Vector3 spawnPos = GetRandomPositionInArea();
+            Transform spawnPoint = _enemySpawnPoints[Random.Range(0, _enemySpawnPoints.Count)];
+            _enemySpawnPoints.Remove(spawnPoint); 
 
-            Enemy instance = Instantiate(enemy, spawnPos, Quaternion.identity, transform);
+            Enemy instance = Instantiate(enemy, spawnPoint.position, Quaternion.identity, transform);
             instance.Health.OnDeath.AddListener(OnEnemyDeath);
-		}
+        }
     }
 
     private void OnEnemyDeath()
