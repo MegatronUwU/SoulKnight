@@ -12,6 +12,8 @@ public class Room : MonoBehaviour
     [SerializeField] private Transform _spawnArea;
     [SerializeField] private Transform _enemySpawnPointsParent;
     private List<Transform> _enemySpawnPoints = new();
+    
+    public GameObject FloorLinePrefab;
 
     //private RoomType _roomType = RoomType.Normal;
 

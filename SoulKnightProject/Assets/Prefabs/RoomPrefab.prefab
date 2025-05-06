@@ -720,6 +720,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnArea: {fileID: 6202380885431505347}
   _enemySpawnPointsParent: {fileID: 4511814348956526816}
+  FloorLinePrefab: {fileID: 8372514683413096075}
 --- !u!114 &1692242983019978706
 MonoBehaviour:
   m_ObjectHideFlags: 0

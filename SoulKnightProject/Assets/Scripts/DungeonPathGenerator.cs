@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting;
 
 public class DungeonPathGenerator : MonoBehaviour
 {
@@ -19,7 +18,13 @@ public class DungeonPathGenerator : MonoBehaviour
     [SerializeField] private RoomConfiguration _treasureRoomConfiguration = null;
     [SerializeField] private RoomConfiguration _bossRoomConfiguration = null;
 
-	private void Start()
+    private readonly HashSet<(RoomData, RoomData)> _corridorsToIgnore = new();
+
+    [SerializeField] private GameObject _floorLinePrefab;
+
+
+
+    private void Start()
     {
         GeneratePath();
         FindRoomsNeighbours(); 
@@ -90,7 +95,10 @@ public class DungeonPathGenerator : MonoBehaviour
 
             foreach(KeyValuePair<Direction, RoomData> neighbour in data.Neighbours)
             {
-				Transform doorWaypoint = connector.GetDoorWaypointTransform(neighbour.Key);
+                if (_corridorsToIgnore.Contains((data, neighbour.Value)) || _corridorsToIgnore.Contains((neighbour.Value, data)))
+                    continue;
+
+                Transform doorWaypoint = connector.GetDoorWaypointTransform(neighbour.Key);
                 connector.OpenDoor(neighbour.Key);
 
                 if (doorWaypoint != null)
@@ -107,6 +115,9 @@ public class DungeonPathGenerator : MonoBehaviour
 
                 if (!corridorsCreated.Contains((data, neighbour.Value)) && !corridorsCreated.Contains((neighbour.Value, data)))
                 {
+                    if (_corridorsToIgnore.Contains((data, neighbour.Value)) || _corridorsToIgnore.Contains((neighbour.Value, data)))
+                        continue;
+
                     SpawnCorridor(doorWaypoint.position, neighbourDoorWaypoint.position);
                     corridorsCreated.Add((data, neighbour.Value));
                 }
@@ -252,6 +263,11 @@ public class DungeonPathGenerator : MonoBehaviour
         RemoveWallsBetween(current, Direction.Up, up);
         RemoveWallsBetween(up, Direction.Right, upRight);
         RemoveWallsBetween(right, Direction.Up, upRight);
+
+        InstantiateFloorLineBetween(current, right);
+        InstantiateFloorLineBetween(current, up);
+        InstantiateFloorLineBetween(up, upRight);
+        InstantiateFloorLineBetween(right, upRight);
     }
 
     private void RemoveWallsBetween(RoomData a, Direction dirToB, RoomData b)
@@ -265,6 +281,24 @@ public class DungeonPathGenerator : MonoBehaviour
 
         if(connectorB != null)
             connectorB.DestroyWall(GetOppositeDirection(dirToB));
+    }
+
+    private void InstantiateFloorLineBetween(RoomData a, RoomData b)
+    {
+        if (_floorLinePrefab == null)
+            return;
+
+        Vector3 pos = (a.Position + b.Position) / 2f;
+        Vector3 dir = b.Position - a.Position;
+
+        Quaternion rotation;
+
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.z))
+            rotation = Quaternion.Euler(0, 90f, 0); 
+        else
+            rotation = Quaternion.identity; 
+
+        Instantiate(_floorLinePrefab, pos, rotation, _dungeonParent);
     }
 
     private class RoomData
