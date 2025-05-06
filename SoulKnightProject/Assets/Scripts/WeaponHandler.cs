@@ -4,6 +4,7 @@ public class WeaponHandler : MonoBehaviour
 {
     [SerializeField] private Transform _renderer;
     [SerializeField] private WeaponData _currentWeapon;
+    [SerializeField] private WeaponUI _weaponUI;
 
     private int _currentAmmo;
 
@@ -22,6 +23,9 @@ public class WeaponHandler : MonoBehaviour
 
         if (_currentWeapon != null)
             _currentAmmo = _currentWeapon.MaxAmmo;
+
+        _weaponUI?.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo); 
+
     }
 
     public void ShootAuto()
@@ -36,7 +40,9 @@ public class WeaponHandler : MonoBehaviour
         }
 
         _currentWeapon.Shoot(_renderer, Team.Player);
-        _currentAmmo--; 
+        _currentAmmo--;
+
+        _weaponUI?.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo); 
     }
 
     private bool TryFindClosestEnemy(out Transform closestEnemy)
@@ -68,6 +74,8 @@ public class WeaponHandler : MonoBehaviour
 
         _currentAmmo += amount;
         _currentAmmo = Mathf.Min(_currentAmmo, _currentWeapon.MaxAmmo);
+
+        _weaponUI?.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo); 
     }
 
     public int GetCurrentAmmo() => _currentAmmo;
