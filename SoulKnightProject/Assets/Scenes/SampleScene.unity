@@ -210,8 +210,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 706, y: -65.00006}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 849.1, y: -65.00006}
+  m_SizeDelta: {x: 331.2, y: 50}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &290525546
 MonoBehaviour:
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roomPrefab: {fileID: 891545835009068740, guid: b401987be1fd90a459b9df199a5f24d6, type: 3}
   _pathLength: 25
-  _roomSpacing: 25
+  _roomSpacing: 24
   _dungeonParent: {fileID: 1695536907}
   _corridorPrefab: {fileID: 8926578685659555167, guid: d4b1db6723690224a9e7bd638f5c2036, type: 3}
   _safeRoomConfiguration: {fileID: 11400000, guid: bd1ad98ab27ae0e49bd7a92b5b59c9e6, type: 2}
@@ -1631,8 +1631,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 706, y: -0.000030517578}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 849.1, y: -0.000030517578}
+  m_SizeDelta: {x: 331.2, y: 50}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1226830740
 MonoBehaviour:

@@ -25,9 +25,15 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         _connector = GetComponent<RoomConnector>();
-        _enemySpawnPoints = _enemySpawnPointsParent.GetComponentsInChildren<Transform>()
-            .Where(t => t != _enemySpawnPointsParent)
-            .ToList();
+        _enemySpawnPoints = new(_enemySpawnPointsParent.childCount);
+
+        foreach (Transform child in _enemySpawnPointsParent)
+        {
+            if (child == _enemySpawnPointsParent)
+                continue;
+
+			_enemySpawnPoints.Add(child);
+		}
     }
 
     public void InitializeRoom(RoomConfiguration configuration)
@@ -101,6 +107,9 @@ public class Room : MonoBehaviour
             return;
 
         _enemiesCount = Random.Range(1, maxEnemiesCount);
+
+        while (_enemiesCount > _enemySpawnPoints.Count)
+            _enemiesCount--;
 
         for (int i = 0; i < _enemiesCount; i++)
         {

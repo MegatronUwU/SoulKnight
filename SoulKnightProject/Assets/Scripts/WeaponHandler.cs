@@ -8,7 +8,16 @@ public class WeaponHandler : MonoBehaviour
 
     private int _currentAmmo;
 
-    public void TriggerAttack()
+	private void Start()
+	{
+		if(_currentWeapon != null)
+			_currentAmmo = _currentWeapon.MaxAmmo;
+
+		if (_weaponUI != null)
+			_weaponUI.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo);
+	}
+
+	public void TriggerAttack()
     {
         //if (_currentWeapon != null && _renderer != null && _currentWeapon.CanShoot())
         //{
@@ -24,8 +33,8 @@ public class WeaponHandler : MonoBehaviour
         if (_currentWeapon != null)
             _currentAmmo = _currentWeapon.MaxAmmo;
 
-        _weaponUI?.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo); 
-
+        if(_weaponUI != null)
+            _weaponUI.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo); 
     }
 
     public void ShootAuto()
@@ -42,8 +51,9 @@ public class WeaponHandler : MonoBehaviour
         _currentWeapon.Shoot(_renderer, Team.Player);
         _currentAmmo--;
 
-        _weaponUI?.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo); 
-    }
+		if (_weaponUI != null)
+			_weaponUI.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo);
+	}
 
     private bool TryFindClosestEnemy(out Transform closestEnemy)
     {

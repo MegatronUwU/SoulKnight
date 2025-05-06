@@ -13,9 +13,9 @@ public class Projectile : MonoBehaviour
     public void Initialize(Vector3 movementDirection, Team team)
     {
         if(team == Team.Player)
-            gameObject.layer = LayerMask.NameToLayer("Player");
+            gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
         else
-			gameObject.layer = LayerMask.NameToLayer("Enemy");
+			gameObject.layer = LayerMask.NameToLayer("EnemyProjectile");
 
 		_movementDirection = movementDirection;
 

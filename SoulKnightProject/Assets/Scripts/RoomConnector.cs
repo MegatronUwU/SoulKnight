@@ -55,7 +55,23 @@ public class RoomConnector : MonoBehaviour
         anchor.Door.gameObject.SetActive(true);
     }
 
-    public void CloseAllDoors()
+    public void RemoveWallsAndDoors(Direction direction)
+    {
+		DoorAnchor anchor = GetDoorAnchorFromDirection(direction);
+
+        if (anchor == null || anchor.Wall == null)
+            return;
+
+        Destroy(anchor.Wall);
+
+        if (anchor.Door == null)
+            return;
+
+        Destroy(anchor.Door.gameObject);
+	}
+
+
+	public void CloseAllDoors()
     {
         foreach (DoorAnchor anchor in _doorAnchors)
         {
