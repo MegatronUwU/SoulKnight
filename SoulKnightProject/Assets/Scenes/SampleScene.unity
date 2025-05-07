@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &49635897 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8372514683413096075, guid: b401987be1fd90a459b9df199a5f24d6, type: 3}
-  m_PrefabInstance: {fileID: 2100912411}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &242382516
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,7 +868,7 @@ MonoBehaviour:
   _normalRoomConfiguration: {fileID: 11400000, guid: 4641b33b119d4c74494910e44c8b095f, type: 2}
   _treasureRoomConfiguration: {fileID: 11400000, guid: 4641b33b119d4c74494910e44c8b095f, type: 2}
   _bossRoomConfiguration: {fileID: 11400000, guid: 77a9de05dbed2704cbd7c45b46818494, type: 2}
-  _floorLinePrefab: {fileID: 49635897}
+  _floorLinePrefab: {fileID: 2506363635481044125, guid: 9e08c059fe8c3064d83bb340cb963ba6, type: 3}
 --- !u!4 &763544257
 Transform:
   m_ObjectHideFlags: 0
@@ -2266,6 +2261,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 891545835009068740, guid: b401987be1fd90a459b9df199a5f24d6, type: 3}
+      propertyPath: FloorLinePrefab
+      value: 
+      objectReference: {fileID: 2506363635481044125, guid: 9e08c059fe8c3064d83bb340cb963ba6, type: 3}
     - target: {fileID: 1506898037406323568, guid: b401987be1fd90a459b9df199a5f24d6, type: 3}
       propertyPath: m_LocalPosition.z
       value: -6
