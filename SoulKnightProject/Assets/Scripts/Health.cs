@@ -19,6 +19,9 @@ public class Health : MonoBehaviour
     public delegate void HealthChangedEventHandler(int currentHealth, int maxHealth);
     public event HealthChangedEventHandler HealthChanged;
 
+    private Animator _animator;
+
+
     private void Awake()
     {
         _currentHealth = _maxHealth;
@@ -26,6 +29,7 @@ public class Health : MonoBehaviour
 
 	private IEnumerator Start()
 	{
+        _animator = GetComponentInChildren<Animator>();
         yield return null;
 		HealthChanged?.Invoke(_currentHealth, _maxHealth);
 	}
@@ -49,7 +53,8 @@ public class Health : MonoBehaviour
 
 	private void Die()
     {
+        _animator.SetTrigger("Die");
         OnDeath?.Invoke();
-        Destroy(gameObject);
+        Destroy(gameObject, 3f);
     }
 }

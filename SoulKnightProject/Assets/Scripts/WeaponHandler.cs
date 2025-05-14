@@ -8,22 +8,37 @@ public class WeaponHandler : MonoBehaviour
 
     private int _currentAmmo;
 
-	private void Start()
+    private Animator _animator;
+
+
+    private void Start()
 	{
 		if(_currentWeapon != null)
 			_currentAmmo = _currentWeapon.MaxAmmo;
 
 		if (_weaponUI != null)
 			_weaponUI.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo);
-	}
 
-	public void TriggerAttack()
+        _animator = GetComponentInChildren<Animator>();
+
+    }
+
+    public void TriggerAttack()
     {
         //if (_currentWeapon != null && _renderer != null && _currentWeapon.CanShoot())
         //{
         //    _currentWeapon.Shoot(_renderer, Team.Player);
         //}
+        if (_animator != null)
+            _animator.SetBool("IsShooting", true);
+
         ShootAuto();
+    }
+
+    public void StopAttack()
+    {
+        if (_animator != null)
+            _animator.SetBool("IsShooting", false);
     }
 
     public void SetWeapon(WeaponData newWeapon)

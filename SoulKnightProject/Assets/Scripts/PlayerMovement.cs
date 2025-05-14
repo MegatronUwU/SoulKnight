@@ -7,15 +7,26 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Transform _renderer = null;
 
+    private Animator _animator;
+
+    private void Start()
+    {
+        _animator = GetComponentInChildren<Animator>();
+    }
+
     private void Update()
     {
         Vector3 direction = new Vector3(_joystick.Horizontal, 0f, _joystick.Vertical);
+        float speed = direction.magnitude;
 
-        if (direction.magnitude > 0.1f)
+
+        if (speed > 0.1f)
         {
 			_renderer.forward = direction.normalized;
             transform.Translate(_moveSpeed * Time.deltaTime * direction);
             //GetComponent<Rigidbody>().linearVelocity = _moveSpeed * Time.deltaTime * direction;
+
+            _animator.SetFloat("Speed", speed);
         }
     }
 
