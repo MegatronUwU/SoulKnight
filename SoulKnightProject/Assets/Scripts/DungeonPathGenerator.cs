@@ -202,12 +202,16 @@ public class DungeonPathGenerator : MonoBehaviour
 			if (right.IsMergedToBigRoom || up.IsMergedToBigRoom || upRight.IsMergedToBigRoom)
 				continue;
 
-			MergeRoomsToBigRoom(current, right, up, upRight);
+			Vector3 roomPosition = new((current.InstantiatedRoom.transform.position.x + upRight.InstantiatedRoom.transform.position.x) / 2,
+				(current.InstantiatedRoom.transform.position.y + upRight.InstantiatedRoom.transform.position.y) / 2,
+				(current.InstantiatedRoom.transform.position.z + upRight.InstantiatedRoom.transform.position.z) / 2);
+
+			MergeRoomsToBigRoom(roomPosition, current, right, up, upRight);
 			break;
 		}
 	}
 
-	private void MergeRoomsToBigRoom(params RoomData[] roomDatas)
+	private void MergeRoomsToBigRoom(Vector3 roomPosition, params RoomData[] roomDatas)
 	{
 		foreach (RoomData roomData in roomDatas)
 		{
@@ -225,10 +229,10 @@ public class DungeonPathGenerator : MonoBehaviour
 		RemoveWallsBetween(up, Direction.Right, upRight);
 		RemoveWallsBetween(right, Direction.Up, upRight);
 
-		InstantiateFloorLineBetween(current, right);
-		InstantiateFloorLineBetween(current, up);
-		InstantiateFloorLineBetween(up, upRight);
-		InstantiateFloorLineBetween(right, upRight);
+		InstantiateFloorLineBetween(current, right, roomPosition);
+		InstantiateFloorLineBetween(current, up, roomPosition);
+		InstantiateFloorLineBetween(up, upRight, roomPosition);
+		InstantiateFloorLineBetween(right, upRight, roomPosition);
 	}
 
 	private void RemoveWallsBetween(RoomData a, Direction dirToB, RoomData b)
@@ -244,7 +248,7 @@ public class DungeonPathGenerator : MonoBehaviour
 			connectorB.DestroyWall(GetOppositeDirection(dirToB));
 	}
 
-	private void InstantiateFloorLineBetween(RoomData a, RoomData b)
+	private void InstantiateFloorLineBetween(RoomData a, RoomData b, Vector3 roomPosition)
 	{
 		if (_floorLinePrefab == null)
 			return;
@@ -255,9 +259,19 @@ public class DungeonPathGenerator : MonoBehaviour
 		Quaternion rotation;
 
 		if (Mathf.Abs(dir.x) > Mathf.Abs(dir.z))
-			rotation = Quaternion.Euler(0, 90f, 0);
+		{
+			if(a.Position.z < roomPosition.z)
+				rotation = Quaternion.Euler(0, 90f, 0);
+			else
+				rotation = Quaternion.Euler(0, -90f, 0);
+		}
 		else
-			rotation = Quaternion.identity;
+		{
+			if(a.Position.x > roomPosition.x)
+				rotation = Quaternion.identity;
+			else
+				rotation = Quaternion.Euler(0, 180f, 0);
+		}
 
 		Instantiate(_floorLinePrefab, pos, rotation, _dungeonParent);
 	}
