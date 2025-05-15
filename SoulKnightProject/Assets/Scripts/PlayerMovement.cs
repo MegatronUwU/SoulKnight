@@ -26,8 +26,8 @@ public class PlayerMovement : MonoBehaviour
             transform.Translate(_moveSpeed * Time.deltaTime * direction);
             //GetComponent<Rigidbody>().linearVelocity = _moveSpeed * Time.deltaTime * direction;
 
-            _animator.SetFloat("Speed", speed);
         }
+            _animator.SetFloat("Speed", speed);
     }
 
 	private void OnTriggerEnter(Collider other)

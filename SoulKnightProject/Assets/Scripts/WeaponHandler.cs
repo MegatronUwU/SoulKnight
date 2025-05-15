@@ -5,10 +5,10 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private Transform _renderer;
     [SerializeField] private WeaponData _currentWeapon;
     [SerializeField] private WeaponUI _weaponUI;
+    [SerializeField] private Animator _animator;
 
     private int _currentAmmo;
 
-    private Animator _animator;
 
 
     private void Start()
@@ -19,8 +19,6 @@ public class WeaponHandler : MonoBehaviour
 		if (_weaponUI != null)
 			_weaponUI.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo);
 
-        _animator = GetComponentInChildren<Animator>();
-
     }
 
     public void TriggerAttack()
@@ -29,17 +27,11 @@ public class WeaponHandler : MonoBehaviour
         //{
         //    _currentWeapon.Shoot(_renderer, Team.Player);
         //}
-        if (_animator != null)
-            _animator.SetBool("IsShooting", true);
+        _animator.SetTrigger("Shoot");
 
         ShootAuto();
     }
 
-    public void StopAttack()
-    {
-        if (_animator != null)
-            _animator.SetBool("IsShooting", false);
-    }
 
     public void SetWeapon(WeaponData newWeapon)
     {

@@ -53,7 +53,9 @@ public class Health : MonoBehaviour
 
 	private void Die()
     {
-        _animator.SetTrigger("Die");
+        if (_animator != null)
+            _animator.SetTrigger("Die");
+
         OnDeath?.Invoke();
         Destroy(gameObject, 3f);
     }
