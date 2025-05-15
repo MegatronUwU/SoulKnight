@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 6660051090350545948}
   _currentWeapon: {fileID: 11400000, guid: 98e0146de3cc46d4cb9e6377a095e34f, type: 2}
+  _weaponUI: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!1 &1166476313829008580
 GameObject:
   m_ObjectHideFlags: 0
