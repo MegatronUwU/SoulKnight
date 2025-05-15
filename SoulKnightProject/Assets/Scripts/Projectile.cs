@@ -8,7 +8,24 @@ public class Projectile : MonoBehaviour
     [SerializeField] LayerMask PlayerLayer;
 	[SerializeField] LayerMask EnemyLayer;
 
-	private Vector3 _movementDirection = Vector3.zero;
+    [SerializeField] private ProjectileTrailData _trailData;
+
+    private Vector3 _movementDirection = Vector3.zero;
+
+    private void Start()
+    {
+        var trail = GetComponent<TrailRenderer>();
+        if (trail != null && _trailData != null)
+        {
+            trail.time = _trailData.TrailTime;
+            trail.startWidth = _trailData.StartWidth;
+            trail.endWidth = _trailData.EndWidth;
+            trail.colorGradient = _trailData.ColorOverTime;
+
+            if (_trailData.TrailMaterial != null)
+                trail.material = _trailData.TrailMaterial;
+        }
+    }
 
     public void Initialize(Vector3 movementDirection, Team team)
     {
