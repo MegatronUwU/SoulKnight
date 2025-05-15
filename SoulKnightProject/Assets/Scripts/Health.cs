@@ -21,6 +21,9 @@ public class Health : MonoBehaviour
 
     private Animator _animator;
 
+    private bool _isDead = false;
+
+
 
     private void Awake()
     {
@@ -36,6 +39,8 @@ public class Health : MonoBehaviour
 
 	public void TakeDamage(int amount)
     {
+        if (_isDead) return;
+
         _currentHealth -= amount;
         _currentHealth = Mathf.Max(_currentHealth, 0);
 		HealthChanged?.Invoke(_currentHealth, _maxHealth);
@@ -53,7 +58,11 @@ public class Health : MonoBehaviour
 
 	private void Die()
     {
+        if (_isDead) return;      
+        _isDead = true;
+
         if (_animator != null)
+            _animator.SetLayerWeight(1, 0f);
             _animator.SetTrigger("Die");
 
         OnDeath?.Invoke();

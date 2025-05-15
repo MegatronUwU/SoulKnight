@@ -92,7 +92,13 @@ public class WeaponHandler : MonoBehaviour
         _currentAmmo += amount;
         _currentAmmo = Mathf.Min(_currentAmmo, _currentWeapon.MaxAmmo);
 
-        _weaponUI?.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo); 
+        _weaponUI?.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo);
+
+        if (_animator == null)
+            _animator = GetComponentInChildren<Animator>();
+
+        if (_animator != null)
+            _animator.SetTrigger("Reload");
     }
 
     public int GetCurrentAmmo() => _currentAmmo;
