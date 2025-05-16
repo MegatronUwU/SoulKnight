@@ -1,11 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingMenu : MonoBehaviour
+public class SettingsMenu : MonoBehaviour
 {
-    [SerializeField] private Joystick fixedJoystick;
-    [SerializeField] private Joystick dynamicJoystick;
-
     [SerializeField] private Toggle toggleFixed;
     [SerializeField] private Toggle toggleDynamic;
     [SerializeField] private GameObject settingsPanel;
@@ -41,23 +38,17 @@ public class SettingMenu : MonoBehaviour
 
     public void SetFixedJoystick()
     {
-        if (!toggleFixed.isOn) return;
+		toggleFixed.SetIsOnWithoutNotify(true);
+        toggleDynamic.SetIsOnWithoutNotify(false);
 
-        fixedJoystick.gameObject.SetActive(true);
-        dynamicJoystick.gameObject.SetActive(false);
-        toggleDynamic.isOn = false;
-
-        PlayerPrefs.SetString("JoystickType", "Fixed");
+		PlayerPrefs.SetString("JoystickType", "Fixed");
     }
 
     public void SetDynamicJoystick()
     {
-        if (!toggleDynamic.isOn) return;
+        toggleFixed.SetIsOnWithoutNotify(false);
+		toggleDynamic.SetIsOnWithoutNotify(true);
 
-        fixedJoystick.gameObject.SetActive(false);
-        dynamicJoystick.gameObject.SetActive(true);
-        toggleFixed.isOn = false;
-
-        PlayerPrefs.SetString("JoystickType", "Dynamic");
+		PlayerPrefs.SetString("JoystickType", "Dynamic");
     }
 }
