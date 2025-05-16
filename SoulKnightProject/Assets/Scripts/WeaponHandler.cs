@@ -6,6 +6,7 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private WeaponData _currentWeapon;
     [SerializeField] private WeaponUI _weaponUI;
     [SerializeField] private Animator _animator;
+    [SerializeField] private Transform _bulletSpawnPoint;
 
     private int _currentAmmo;
 
@@ -51,11 +52,11 @@ public class WeaponHandler : MonoBehaviour
 
         if (TryFindClosestEnemy(out Transform target))
         {
-            Vector3 direction = (target.position - _renderer.position).normalized;
-            _renderer.forward = direction;
+            Vector3 direction = (target.position - _bulletSpawnPoint.position).normalized;
+            _bulletSpawnPoint.forward = direction;
         }
 
-        _currentWeapon.Shoot(_renderer, Team.Player);
+        _currentWeapon.Shoot(_bulletSpawnPoint, Team.Player);
         _currentAmmo--;
 
 		if (_weaponUI != null)
