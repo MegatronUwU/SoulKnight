@@ -17,15 +17,22 @@ public class EnemyController : MonoBehaviour
     private float _lastShotTime;
     private RoomConnector _currentRoomConnector;
 
+    private Animator _animator;
+    private bool _isDead = false;
+
+
+
 
     private void Start()
     {
         _playerTransform = _playerReferenceData.Player.transform;
+        _animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
     {
         if (_playerTransform == null) return;
+        if (_isDead) return;
 
         HandleMovement();
         TryShootAtPlayer();
@@ -37,6 +44,8 @@ public class EnemyController : MonoBehaviour
         Vector3 directionToPlayer = playerPosition - transform.position;
         Vector3 directionToPlayerNormalized = directionToPlayer.normalized;
         float distanceToPlayer = directionToPlayer.magnitude;
+
+        _animator.SetFloat("Speed", directionToPlayer.magnitude);
 
         if (_currentRoomConnector != null && !IsPlayerInSameRoom())
         {
@@ -69,6 +78,8 @@ public class EnemyController : MonoBehaviour
             return;
 
         _lastShotTime = Time.time;
+
+        _animator.SetTrigger("Shoot");
 
         //Vector3 spawnPos = _renderer.position + _renderer.forward * _shootOffset;
         _weaponData.Shoot(_renderer, Team.Enemy);
