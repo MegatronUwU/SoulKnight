@@ -103,4 +103,7 @@ public class WeaponHandler : MonoBehaviour
     }
 
     public int GetCurrentAmmo() => _currentAmmo;
+
+    public int GetMaxAmmo() => _currentWeapon != null ? _currentWeapon.MaxAmmo : 0;
+
 }

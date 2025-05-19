@@ -7,8 +7,10 @@ public class AmmoPickupData : PickupData
 
 	public override bool CanPickup(Player player)
 	{
-		//Check if player has missing ammo
-		return true;
+		if (player.PlayerWeaponHandler == null)
+			return false;
+
+		return player.PlayerWeaponHandler.GetCurrentAmmo() < player.PlayerWeaponHandler.GetMaxAmmo();
 	}
 
 	public override void PickupItem(Player player)
