@@ -53,8 +53,10 @@ public class Health : MonoBehaviour
     {
         _currentHealth += amount;
         _currentHealth = Mathf.Min(_currentHealth, _maxHealth);
-		HealthChanged?.Invoke(_currentHealth, _maxHealth    );
-	}
+		HealthChanged?.Invoke(_currentHealth, _maxHealth);
+        
+        SoundManager.Instance.Play("Heal");
+    }
 
 	private void Die()
     {
@@ -64,6 +66,8 @@ public class Health : MonoBehaviour
         if (_animator != null)
             _animator.SetLayerWeight(1, 0f);
             _animator.SetTrigger("Die");
+        
+        SoundManager.Instance.Play("Die");
 
         OnDeath?.Invoke();
         Destroy(gameObject, 3f);

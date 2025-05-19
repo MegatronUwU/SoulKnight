@@ -26,6 +26,8 @@ public class Door : MonoBehaviour
 
 		_closedCollider.SetActive(false);
 		_doorAnimator.SetTrigger("Open");
+		
+		SoundManager.Instance.Play("DoorOpen");
 	}
 
 	public void CloseDoor()

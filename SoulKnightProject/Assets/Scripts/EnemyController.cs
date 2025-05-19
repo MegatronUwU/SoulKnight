@@ -19,6 +19,8 @@ public class EnemyController : MonoBehaviour
 
     private Animator _animator;
     private bool _isDead = false;
+    private Vector3 _lastPosition;
+
 
 
 
@@ -27,6 +29,7 @@ public class EnemyController : MonoBehaviour
     {
         _playerTransform = _playerReferenceData.Player.transform;
         _animator = GetComponentInChildren<Animator>();
+        _lastPosition = transform.position;
     }
 
     private void Update()
@@ -36,6 +39,7 @@ public class EnemyController : MonoBehaviour
 
         HandleMovement();
         TryShootAtPlayer();
+        UpdateMovementAnimation();
     }
 
     private void HandleMovement()
@@ -109,5 +113,14 @@ public class EnemyController : MonoBehaviour
         {
             return diff.z > 0 ? Direction.Up : Direction.Down;
         }
+    }
+
+    private void UpdateMovementAnimation()
+    {
+        if (_animator == null) return;
+
+        float speed = (transform.position - _lastPosition).magnitude / Time.deltaTime;
+        _animator.SetFloat("Speed", speed);
+        _lastPosition = transform.position;
     }
 }

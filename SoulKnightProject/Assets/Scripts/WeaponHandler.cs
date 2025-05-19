@@ -61,7 +61,14 @@ public class WeaponHandler : MonoBehaviour
 
 		if (_weaponUI != null)
 			_weaponUI.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo);
-	}
+
+        if (_currentWeapon.WeaponName == "MachineGun")
+            SoundManager.Instance.Play("MachineGun");
+        else if (_currentWeapon.WeaponName == "ShotGun")
+            SoundManager.Instance.Play("ShotGun");
+        else if (_currentWeapon.WeaponName == "Pistol")
+            SoundManager.Instance.Play("Pistol");
+    }
 
     private bool TryFindClosestEnemy(out Transform closestEnemy)
     {

@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform _renderer = null;
 
     private Animator _animator;
+    private bool _isRunningSoundPlaying = false;
+
 
     private void Start()
     {
@@ -25,9 +27,19 @@ public class PlayerMovement : MonoBehaviour
 			_renderer.forward = direction.normalized;
             transform.Translate(_moveSpeed * Time.deltaTime * direction);
             //GetComponent<Rigidbody>().linearVelocity = _moveSpeed * Time.deltaTime * direction;
-
+            
+            if (!_isRunningSoundPlaying)
+            {
+                SoundManager.Instance.Play("Run");
+                _isRunningSoundPlaying = true;
+            }
         }
-            _animator.SetFloat("Speed", speed);
+        else
+        {
+            _isRunningSoundPlaying = false;
+        }
+       
+        _animator.SetFloat("Speed", speed);
     }
 
 	private void OnTriggerEnter(Collider other)
