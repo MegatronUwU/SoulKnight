@@ -18,5 +18,6 @@ MonoBehaviour:
   FireRate: 2
   ProjectileSpeed: 10
   ProjectilePrefab: {fileID: 9153541436210976379, guid: eb2329cf65ac4244c9b9931f08c8d075, type: 3}
+  SFXName: Shotgun
   PelletCount: 5
   SpreadAngle: 15

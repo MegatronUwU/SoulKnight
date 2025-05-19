@@ -42,6 +42,11 @@ public class EnemyController : MonoBehaviour
         UpdateMovementAnimation();
     }
 
+    public void OnDeath()
+    {
+        _isDead = true;
+    }
+
     private void HandleMovement()
     {
         Vector3 playerPosition = _playerTransform.position;
@@ -123,4 +128,4 @@ public class EnemyController : MonoBehaviour
         _animator.SetFloat("Speed", speed);
         _lastPosition = transform.position;
     }
-}
+}   

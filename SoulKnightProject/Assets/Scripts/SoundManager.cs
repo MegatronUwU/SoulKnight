@@ -1,22 +1,23 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
     [System.Serializable]
-    public class Sound
+    private class Sound
     {
-        public string name;
-        public AudioClip clip;
-        [Range(0f, 1f)] public float volume = 1f;
+        public string Name;
+        public AudioClip Clip;
+        [Range(0f, 1f)] public float Volume = 1f;
     }
 
-    [SerializeField] private List<Sound> sounds;
+    [SerializeField] private List<Sound> _sounds;
 
-    private Dictionary<string, Sound> soundMap;
-    private AudioSource audioSource;
+    private Dictionary<string, Sound> _soundMap;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
@@ -29,22 +30,22 @@ public class SoundManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        audioSource = gameObject.AddComponent<AudioSource>();
-        soundMap = new Dictionary<string, Sound>();
+        _audioSource = gameObject.AddComponent<AudioSource>();
+        _soundMap = new Dictionary<string, Sound>();
 
-        foreach (var sound in sounds)
-            soundMap[sound.name] = sound;
+        foreach (var sound in _sounds)
+            _soundMap[sound.Name] = sound;
     }
 
     public void Play(string soundName)
     {
-        if (!soundMap.ContainsKey(soundName))
+        if (!_soundMap.ContainsKey(soundName))
         {
             Debug.LogWarning($"Sound '{soundName}' pas trouvé");
             return;
         }
 
-        Sound sound = soundMap[soundName];
-        audioSource.PlayOneShot(sound.clip, sound.volume);
+        Sound sound = _soundMap[soundName];
+        _audioSource.PlayOneShot(sound.Clip, sound.Volume);
     }
 }
