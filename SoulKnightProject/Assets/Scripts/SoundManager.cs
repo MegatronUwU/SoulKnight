@@ -21,6 +21,8 @@ public class SoundManager : MonoBehaviour
     private List<AudioSource> _audioSourcePool;
     private Transform _poolContainer;
     private float _masterVolume = 1f;
+    private AudioSource _loopingSource;
+
 
 
     private void Awake()
@@ -108,5 +110,43 @@ public class SoundManager : MonoBehaviour
     public float GetVolume()
     {
         return _masterVolume;
+    }
+
+    public void PlayLoop(string soundName, Transform followTarget = null)
+    {
+        if (!_soundMap.TryGetValue(soundName, out var sound))
+        {
+            Debug.LogWarning($"Sound '{soundName}' pas trouvé");
+            return;
+        }
+
+        if (_loopingSource == null)
+        {
+            GameObject go = new GameObject("LoopingAudioSource");
+            _loopingSource = go.AddComponent<AudioSource>();
+            _loopingSource.spatialBlend = 1f;
+            _loopingSource.rolloffMode = AudioRolloffMode.Linear;
+            _loopingSource.maxDistance = 20f;
+        }
+
+        if (followTarget != null)
+        {
+            _loopingSource.transform.SetParent(followTarget);
+            _loopingSource.transform.localPosition = Vector3.zero;
+        }
+
+        if (_loopingSource.isPlaying && _loopingSource.clip == sound.Clip)
+            return;
+
+        _loopingSource.clip = sound.Clip;
+        _loopingSource.volume = sound.Volume * _masterVolume;
+        _loopingSource.loop = true;
+        _loopingSource.Play();
+    }
+
+    public void StopLoop()
+    {
+        if (_loopingSource != null && _loopingSource.isPlaying)
+            _loopingSource.Stop();
     }
 }

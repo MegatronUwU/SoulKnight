@@ -30,12 +30,13 @@ public class PlayerMovement : MonoBehaviour
             
             if (!_isRunningSoundPlaying)
             {
-                SoundManager.Instance.Play("Run");
+                SoundManager.Instance.PlayLoop("Run", transform);
                 _isRunningSoundPlaying = true;
             }
         }
         else
         {
+            SoundManager.Instance.StopLoop();
             _isRunningSoundPlaying = false;
         }
        
