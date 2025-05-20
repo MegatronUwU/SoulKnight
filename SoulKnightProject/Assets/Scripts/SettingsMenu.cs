@@ -11,9 +11,9 @@ public class SettingsMenu : MonoBehaviour
 
     private void Start()
     {
-        _settingsPanel.SetActive(false);
+		_settingsPanel.SetActive(false);
 
-        string savedType = PlayerPrefs.GetString("JoystickType", "Fixed");
+		string savedType = PlayerPrefs.GetString("JoystickType", "Fixed");
         if (savedType == "Dynamic")
         {
             _toggleDynamic.isOn = true;
@@ -27,7 +27,7 @@ public class SettingsMenu : MonoBehaviour
             SetFixedJoystick();
         }
 
-        if (_volumeSlider != null && _volumeSlider.gameObject.activeInHierarchy) { 
+        if (_volumeSlider != null) { 
 
             float savedVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
             _volumeSlider.value = savedVolume;
@@ -39,9 +39,11 @@ public class SettingsMenu : MonoBehaviour
         {
             Debug.LogWarning("Volume est null");
         }
-    }
 
-    public void ToggleSettingsPanel()
+
+	}
+
+	public void ToggleSettingsPanel()
     {
         _settingsPanel.SetActive(!_settingsPanel.activeSelf);
     }

@@ -21,9 +21,7 @@ public class SoundManager : MonoBehaviour
     private List<AudioSource> _audioSourcePool;
     private Transform _poolContainer;
     private float _masterVolume = 1f;
-    private AudioSource _loopingSource;
-
-
+    [SerializeField] private AudioSource _loopingSource;
 
     private void Awake()
     {
@@ -34,6 +32,7 @@ public class SoundManager : MonoBehaviour
         }
 
         Instance = this;
+
         _masterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
 
         DontDestroyOnLoad(gameObject);
@@ -126,12 +125,13 @@ public class SoundManager : MonoBehaviour
         {
             GameObject go = new GameObject("LoopingAudioSource");
             _loopingSource = go.AddComponent<AudioSource>();
-            _loopingSource.spatialBlend = 1f;
-            _loopingSource.rolloffMode = AudioRolloffMode.Linear;
-            _loopingSource.maxDistance = 20f;
         }
 
-        if (followTarget != null)
+		_loopingSource.spatialBlend = 1f;
+		_loopingSource.rolloffMode = AudioRolloffMode.Linear;
+		_loopingSource.maxDistance = 20f;
+
+		if (followTarget != null)
         {
             _loopingSource.transform.SetParent(followTarget);
             _loopingSource.transform.localPosition = Vector3.zero;
