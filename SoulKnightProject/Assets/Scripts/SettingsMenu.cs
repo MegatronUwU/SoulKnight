@@ -3,52 +3,72 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    [SerializeField] private Toggle toggleFixed;
-    [SerializeField] private Toggle toggleDynamic;
-    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private Toggle _toggleFixed;
+    [SerializeField] private Toggle _toggleDynamic;
+    [SerializeField] private GameObject _settingsPanel;
+    [SerializeField] private Slider _volumeSlider;
+
 
     private void Start()
     {
-        settingsPanel.SetActive(false);
+        _settingsPanel.SetActive(false);
 
         string savedType = PlayerPrefs.GetString("JoystickType", "Fixed");
         if (savedType == "Dynamic")
         {
-            toggleDynamic.isOn = true;
-            toggleFixed.isOn = false;
+            _toggleDynamic.isOn = true;
+            _toggleFixed.isOn = false;
             SetDynamicJoystick();
         }
         else
         {
-            toggleFixed.isOn = true;
-            toggleDynamic.isOn = false;
+            _toggleFixed.isOn = true;
+            _toggleDynamic.isOn = false;
             SetFixedJoystick();
+        }
+
+        if (_volumeSlider != null && _volumeSlider.gameObject.activeInHierarchy) { 
+
+            float savedVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
+            _volumeSlider.value = savedVolume;
+            SoundManager.Instance.SetVolume(savedVolume);
+        
+            _volumeSlider.onValueChanged.AddListener(SetVolume);
+        }
+        else
+        {
+            Debug.LogWarning("Volume est null");
         }
     }
 
     public void ToggleSettingsPanel()
     {
-        settingsPanel.SetActive(!settingsPanel.activeSelf);
+        _settingsPanel.SetActive(!_settingsPanel.activeSelf);
     }
 
     public void CloseSettingsPanel()
     {
-        settingsPanel.SetActive(false);
+        _settingsPanel.SetActive(false);
     }
 
     public void SetFixedJoystick()
     {
-		toggleFixed.SetIsOnWithoutNotify(true);
-        toggleDynamic.SetIsOnWithoutNotify(false);
+		_toggleFixed.SetIsOnWithoutNotify(true);
+        _toggleDynamic.SetIsOnWithoutNotify(false);
 
 		PlayerPrefs.SetString("JoystickType", "Fixed");
     }
 
     public void SetDynamicJoystick()
     {
-        toggleFixed.SetIsOnWithoutNotify(false);
-		toggleDynamic.SetIsOnWithoutNotify(true);
+        _toggleFixed.SetIsOnWithoutNotify(false);
+		_toggleDynamic.SetIsOnWithoutNotify(true);
 
 		PlayerPrefs.SetString("JoystickType", "Dynamic");
+    }
+
+    private void SetVolume(float value)
+    {
+        SoundManager.Instance.SetVolume(value);
     }
 }

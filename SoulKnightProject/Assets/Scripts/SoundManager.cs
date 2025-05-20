@@ -20,6 +20,8 @@ public class SoundManager : MonoBehaviour
     private Dictionary<string, Sound> _soundMap;
     private List<AudioSource> _audioSourcePool;
     private Transform _poolContainer;
+    private float _masterVolume = 1f;
+
 
     private void Awake()
     {
@@ -30,6 +32,8 @@ public class SoundManager : MonoBehaviour
         }
 
         Instance = this;
+        _masterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
+
         DontDestroyOnLoad(gameObject);
 
         _soundMap = new Dictionary<string, Sound>();
@@ -89,8 +93,20 @@ public class SoundManager : MonoBehaviour
         Sound sound = _soundMap[soundName];
         AudioSource src = GetAvailableAudioSource();
         src.clip = sound.Clip;
-        src.volume = sound.Volume;
+        src.volume = sound.Volume * _masterVolume;
         src.transform.position = position;
         src.Play();
+    }
+
+    public void SetVolume(float volume)
+    {
+        _masterVolume = volume;
+        PlayerPrefs.SetFloat("MasterVolume", volume);
+        PlayerPrefs.Save();
+    }
+
+    public float GetVolume()
+    {
+        return _masterVolume;
     }
 }
