@@ -2080,25 +2080,25 @@ MonoBehaviour:
   _sounds:
   - Name: MachineGun
     Clip: {fileID: 8300000, guid: 3061c7b9b32d894478e4126ccce25ca3, type: 3}
-    Volume: 0.2
+    Volume: 0
   - Name: Pistol
     Clip: {fileID: 8300000, guid: 34b439bf70b80a6409eadecc6be92d68, type: 3}
-    Volume: 0.02
+    Volume: 0.2
   - Name: Shotgun
     Clip: {fileID: 8300000, guid: 6dd7024f00606b44eb5884197a66a893, type: 3}
-    Volume: 0.02
+    Volume: 0.2
   - Name: Heal
     Clip: {fileID: 8300000, guid: c48a972d3d024c2408a3331750786a29, type: 3}
-    Volume: 0.02
+    Volume: 0.2
   - Name: Run
     Clip: {fileID: 8300000, guid: 9b713c76b05f8b04882a23a60605b0d2, type: 3}
-    Volume: 0.02
+    Volume: 0.2
   - Name: DoorOpen
     Clip: {fileID: 8300000, guid: 070779cdcfbe3ff4688691fb33bc3e4e, type: 3}
-    Volume: 0.02
+    Volume: 0.2
   - Name: Die
     Clip: {fileID: 8300000, guid: a58e438b7cfa445498120af0e6169082, type: 3}
-    Volume: 0.02
+    Volume: 0.2
   _poolSize: 10
 --- !u!4 &1555048044
 Transform:

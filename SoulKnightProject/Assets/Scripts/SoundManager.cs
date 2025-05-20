@@ -105,6 +105,8 @@ public class SoundManager : MonoBehaviour
         _masterVolume = volume;
         PlayerPrefs.SetFloat("MasterVolume", volume);
         PlayerPrefs.Save();
+
+        Debug.Log("Volume réglé à : " + volume);
     }
 
     public float GetVolume()
