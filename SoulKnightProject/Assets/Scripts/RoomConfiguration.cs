@@ -8,4 +8,7 @@ public class RoomConfiguration : ScriptableObject
 
 	public int MaxEnemiesCount = 3;
 	public Enemy[] PossibleEnemiesToSpawn;
+
+	public bool IsBossRoom => PossibleEnemiesToSpawn.Length == 0 && BossPrefab != null;
+	public GameObject BossPrefab;
 }

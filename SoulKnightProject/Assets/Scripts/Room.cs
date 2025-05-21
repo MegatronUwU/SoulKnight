@@ -22,6 +22,8 @@ public class Room : MonoBehaviour
     private RoomConfiguration _configuration;
     private RoomConnector _connector;
 
+    [SerializeField] private Transform _bossSpawnPoint;
+    [SerializeField] private GameObject _bossPrefab;
     private void Awake()
     {
         _connector = GetComponent<RoomConnector>();
@@ -43,6 +45,11 @@ public class Room : MonoBehaviour
         _connector.InitializeDoors(this);
 
         SpawnObjects(configuration.MaxObjectsCount, configuration.PossibleObjectsToSpawn);
+
+        if (configuration == _configuration && configuration.MaxEnemiesCount == 0 && _bossPrefab != null)
+        {
+            SpawnBoss();
+        }
 
         //switch (_roomType)
         //{
@@ -136,20 +143,34 @@ public class Room : MonoBehaviour
 		_connector.OpenAllDoors(); 
 	}
 
-	//private void SpawnTreasure()
-	//{
-	//    Debug.Log("Spawn coffre");
-	//    // TODO Prefabs de coffre
-	//}
+    //private void SpawnTreasure()
+    //{
+    //    Debug.Log("Spawn coffre");
+    //    // TODO Prefabs de coffre
+    //}
 
-	//private void SpawnBoss()
-	//{
-	//    Debug.Log("Spawn boss");
-	//    // TODO Prefabs de boss
-	//}
+    private void SpawnBoss()
+    {
+        if (_bossPrefab == null || _bossSpawnPoint == null)
+        {
+            Debug.LogWarning("BossPrefab manquant");
+            return;
+        }
 
-	// On récupère une position aléatoire dans la zone de spawn
-	private Vector3 GetRandomPositionInArea()
+        Enemy boss = Instantiate(_bossPrefab, _bossSpawnPoint.position, Quaternion.identity, transform).GetComponent<Enemy>();
+
+        if (boss == null)
+        {
+            Debug.LogError("Script Enemy manquant");
+            return;
+        }
+
+        _enemiesCount = 1; 
+        boss.Health.OnDeath.AddListener(OnEnemyDeath);
+    }
+
+    // On rï¿½cupï¿½re une position alï¿½atoire dans la zone de spawn
+    private Vector3 GetRandomPositionInArea()
     {
         if (_spawnArea == null)
             _spawnArea = this.transform;
