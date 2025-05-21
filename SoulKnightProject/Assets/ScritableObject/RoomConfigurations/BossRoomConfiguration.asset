@@ -19,4 +19,4 @@ MonoBehaviour:
   MaxEnemiesCount: 0
   PossibleEnemiesToSpawn:
   - {fileID: 0}
-  BossPrefab: {fileID: 0}
+  BossPrefab: {fileID: 8271709850941303149, guid: f704410cb34a20d4d87fa72b0131bf2a, type: 3}

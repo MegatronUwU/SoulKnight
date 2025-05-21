@@ -24,6 +24,10 @@ public class Room : MonoBehaviour
 
     [SerializeField] private Transform _bossSpawnPoint;
     [SerializeField] private GameObject _bossPrefab;
+    public GameObject BossPrefab => _bossPrefab;
+
+    private static bool _hasSpawnedBoss = false;
+
     private void Awake()
     {
         _connector = GetComponent<RoomConnector>();
@@ -45,11 +49,6 @@ public class Room : MonoBehaviour
         _connector.InitializeDoors(this);
 
         SpawnObjects(configuration.MaxObjectsCount, configuration.PossibleObjectsToSpawn);
-
-        if (configuration == _configuration && configuration.MaxEnemiesCount == 0 && _bossPrefab != null)
-        {
-            SpawnBoss();
-        }
 
         //switch (_roomType)
         //{
@@ -143,31 +142,37 @@ public class Room : MonoBehaviour
 		_connector.OpenAllDoors(); 
 	}
 
+    public void SetBoss(Enemy boss)
+    {
+        _enemiesCount = 1;
+        boss.Health.OnDeath.AddListener(OnEnemyDeath);
+    }
+
     //private void SpawnTreasure()
     //{
     //    Debug.Log("Spawn coffre");
     //    // TODO Prefabs de coffre
     //}
 
-    private void SpawnBoss()
-    {
-        if (_bossPrefab == null || _bossSpawnPoint == null)
-        {
-            Debug.LogWarning("BossPrefab manquant");
-            return;
-        }
+    //private void SpawnBoss()
+    //{
+    //    if (_bossPrefab == null || _bossSpawnPoint == null)
+    //    {
+    //        Debug.LogWarning("BossPrefab manquant");
+    //        return;
+    //    }
 
-        Enemy boss = Instantiate(_bossPrefab, _bossSpawnPoint.position, Quaternion.identity, transform).GetComponent<Enemy>();
+    //    Enemy boss = Instantiate(_bossPrefab, _bossSpawnPoint.position, Quaternion.identity, transform).GetComponent<Enemy>();
 
-        if (boss == null)
-        {
-            Debug.LogError("Script Enemy manquant");
-            return;
-        }
+    //    if (boss == null)
+    //    {
+    //        Debug.LogError("Script Enemy manquant");
+    //        return;
+    //    }
 
-        _enemiesCount = 1; 
-        boss.Health.OnDeath.AddListener(OnEnemyDeath);
-    }
+    //    _enemiesCount = 1; 
+    //    boss.Health.OnDeath.AddListener(OnEnemyDeath);
+    //}
 
     // On r�cup�re une position al�atoire dans la zone de spawn
     private Vector3 GetRandomPositionInArea()

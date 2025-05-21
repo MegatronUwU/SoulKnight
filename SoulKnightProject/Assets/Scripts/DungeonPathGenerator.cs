@@ -224,6 +224,18 @@ public class DungeonPathGenerator : MonoBehaviour
 		RoomData up = roomDatas[2];
 		RoomData upRight = roomDatas[3];
 
+		Room bossRoom = current.InstantiatedRoom;
+		if (bossRoom != null && bossRoom.BossPrefab != null)
+		{
+			Vector3 bossSpawnPosition = roomPosition + Vector3.up * 0.5f;
+			GameObject bossInstance = GameObject.Instantiate(bossRoom.BossPrefab, bossSpawnPosition, Quaternion.identity, bossRoom.transform);
+
+			if (bossInstance.TryGetComponent(out Enemy enemyBoss))
+			{
+				bossRoom.SetBoss(enemyBoss);
+			}
+		}
+
 		RemoveWallsBetween(current, Direction.Right, right);
 		RemoveWallsBetween(current, Direction.Up, up);
 		RemoveWallsBetween(up, Direction.Right, upRight);
