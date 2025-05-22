@@ -19,6 +19,8 @@ public class BossPhase1State : IBossState
     {
         Debug.Log("Boss Phase 1");
         _timer = _cooldown;
+
+        _boss.Health.HealthChanged += OnHealthChanged;
     }
 
     public void Update()
@@ -29,15 +31,19 @@ public class BossPhase1State : IBossState
             _weapon.Shoot(_origin, Team.Enemy);
             _timer = _cooldown;
         }
-
-        if (_boss.Health.CurrentHealth <= _boss.Health.MaxHealth / 2)
-        {
-            _boss.SetState(new BossPhase2State(_boss, _boss.Phase2Weapon, _origin));
-        }
     }
 
-    public void Exit()
+    private void OnHealthChanged(int currentHealth, int maxHealth)
+	{
+		if (currentHealth <= maxHealth / 2)
+		{
+			_boss.SetState(new BossPhase2State(_boss, _boss.Phase2Weapon, _origin));
+		}
+	}
+
+	public void Exit()
     {
+        _boss.Health.HealthChanged -= OnHealthChanged;
         Debug.Log("Exit Phase 1");
-    }
+	}
 }

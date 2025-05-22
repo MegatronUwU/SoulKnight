@@ -56,7 +56,7 @@ public class WeaponHandler : MonoBehaviour
             _bulletSpawnPoint.forward = direction;
         }
 
-        _currentWeapon.Shoot(_bulletSpawnPoint, Team.Player);
+		_currentWeapon.Shoot(_bulletSpawnPoint, Team.Player);
         _currentAmmo--;
 
 		if (_weaponUI != null)

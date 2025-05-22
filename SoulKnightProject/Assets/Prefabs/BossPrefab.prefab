@@ -2184,6 +2184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1944d319b82048e4ca65113c67029f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: {fileID: 468709398036967224}
   _shootOrigin: {fileID: 496492154081423068}
   _phase1Weapon: {fileID: 11400000, guid: 35d18a5d1b2079d4581725e0ceec3af7, type: 2}
   _phase2Weapon: {fileID: 11400000, guid: 2162f8a63ddf6a54b90144545370aece, type: 2}
