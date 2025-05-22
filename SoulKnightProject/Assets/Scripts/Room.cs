@@ -28,6 +28,9 @@ public class Room : MonoBehaviour
 
     private static bool _hasSpawnedBoss = false;
 
+    [SerializeField] private GameObject _restartDoorPrefab;
+    private GameObject _spawnedRestartDoor;
+
     private void Awake()
     {
         _connector = GetComponent<RoomConnector>();
@@ -139,13 +142,26 @@ public class Room : MonoBehaviour
         if(_enemiesCount > 0)
             return;
 
-		_connector.OpenAllDoors(); 
-	}
+		_connector.OpenAllDoors();
+
+        if (_spawnedRestartDoor != null)
+        {
+            RestartDoor doorScript = _spawnedRestartDoor.GetComponent<RestartDoor>();
+            doorScript?.ActivateDoor();
+        }
+    }
 
     public void SetBoss(Enemy boss)
     {
         _enemiesCount = 1;
         boss.Health.OnDeath.AddListener(OnEnemyDeath);
+
+        if (_restartDoorPrefab != null && _spawnedRestartDoor == null)
+        {
+            Vector3 doorSpawnPosition = transform.position + Vector3.back * 2f;
+            _spawnedRestartDoor = Instantiate(_restartDoorPrefab, doorSpawnPosition, Quaternion.identity, transform);
+            _spawnedRestartDoor.SetActive(false);
+        }
     }
 
     //private void SpawnTreasure()

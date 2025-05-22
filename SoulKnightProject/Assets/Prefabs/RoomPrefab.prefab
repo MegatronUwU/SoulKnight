@@ -724,6 +724,7 @@ MonoBehaviour:
   FloorLinePrefab: {fileID: 8372514683413096075}
   _bossSpawnPoint: {fileID: 2736333721828008475}
   _bossPrefab: {fileID: 8271709850941303149, guid: f704410cb34a20d4d87fa72b0131bf2a, type: 3}
+  _restartDoorPrefab: {fileID: 3412925777704750122, guid: cbdf57143c7d6ed43b1d7fc24778a3ed, type: 3}
 --- !u!114 &1692242983019978706
 MonoBehaviour:
   m_ObjectHideFlags: 0
