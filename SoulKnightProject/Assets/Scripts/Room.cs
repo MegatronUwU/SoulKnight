@@ -151,15 +151,14 @@ public class Room : MonoBehaviour
         }
     }
 
-    public void SetBoss(Enemy boss)
+    public void SetBoss(Enemy boss, Vector3 restartDoorPosition)
     {
         _enemiesCount = 1;
         boss.Health.OnDeath.AddListener(OnEnemyDeath);
 
         if (_restartDoorPrefab != null && _spawnedRestartDoor == null)
         {
-            Vector3 doorSpawnPosition = transform.position + Vector3.back * 2f;
-            _spawnedRestartDoor = Instantiate(_restartDoorPrefab, doorSpawnPosition, Quaternion.identity, transform);
+            _spawnedRestartDoor = Instantiate(_restartDoorPrefab, restartDoorPosition, Quaternion.identity, transform);
             _spawnedRestartDoor.SetActive(false);
         }
     }

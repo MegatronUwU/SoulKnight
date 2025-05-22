@@ -232,7 +232,8 @@ public class DungeonPathGenerator : MonoBehaviour
 
 			if (bossInstance.TryGetComponent(out Enemy enemyBoss))
 			{
-				bossRoom.SetBoss(enemyBoss);
+				Vector3 doorSpawnPosition = roomPosition + Vector3.back * 2f;
+				bossRoom.SetBoss(enemyBoss, doorSpawnPosition);
 			}
 		}
 
