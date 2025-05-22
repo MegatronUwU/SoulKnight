@@ -1314,6 +1314,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4647204367717524884}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5955231943105659434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6994279812449068850}
+  m_Layer: 7
+  m_Name: ShootOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6994279812449068850
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955231943105659434}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6533025181451309283}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5967086247767155338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,7 +1947,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6994279812449068850}
   m_Father: {fileID: 496492154081423068}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &3184182928463925229
@@ -2050,6 +2082,7 @@ GameObject:
   - component: {fileID: 7460523297946855476}
   - component: {fileID: 4975147478497934669}
   - component: {fileID: 468709398036967224}
+  - component: {fileID: -977020433713244415}
   - component: {fileID: 7054987082902451473}
   - component: {fileID: 3062632571227949996}
   m_Layer: 7
@@ -2139,6 +2172,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-977020433713244415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8271709850941303149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1944d319b82048e4ca65113c67029f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shootOrigin: {fileID: 496492154081423068}
+  _phase1Weapon: {fileID: 11400000, guid: 35d18a5d1b2079d4581725e0ceec3af7, type: 2}
+  _phase2Weapon: {fileID: 11400000, guid: 2162f8a63ddf6a54b90144545370aece, type: 2}
 --- !u!54 &7054987082902451473
 Rigidbody:
   m_ObjectHideFlags: 0
