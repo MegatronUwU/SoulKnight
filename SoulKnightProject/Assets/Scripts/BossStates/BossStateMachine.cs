@@ -14,9 +14,17 @@ public class BossStateMachine : MonoBehaviour
     public WeaponData Phase1Weapon => _phase1Weapon;
     public WeaponData Phase2Weapon => _phase2Weapon;
 
+    private Animator _animator;
+    public Animator Animator => _animator;
+
     private void Start()
     {
         SetState(new BossPhase1State(this, _shootOrigin));
+    }
+
+    private void Awake()
+    {
+        _animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()

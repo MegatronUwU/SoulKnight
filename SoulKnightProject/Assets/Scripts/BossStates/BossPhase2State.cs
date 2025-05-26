@@ -16,8 +16,8 @@ public class BossPhase2State : IBossState
 
         _attacks = new List<IBossAttack>
         {
-            new FanShot(_boss.Phase2Weapon, 7, 60f),
-            new SpiralShot(_boss.Phase2Weapon, 12, 30f)
+            new FanShot(_boss.Phase2Weapon, 7, 60f, _boss.Animator),
+            new SpiralShot(_boss.Phase2Weapon, 12, 30f, _boss.Animator)
         };
     }
 

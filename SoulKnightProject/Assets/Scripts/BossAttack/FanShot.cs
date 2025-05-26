@@ -6,16 +6,20 @@ public class FanShot : IBossAttack
     private WeaponData _weapon;
     private int _bulletCount;
     private float _spreadAngle;
+    private Animator _animator;
 
-    public FanShot(WeaponData weapon, int bulletCount = 5, float spreadAngle = 30f)
+    public FanShot(WeaponData weapon, int bulletCount = 5, float spreadAngle = 30f, Animator animator = null)
     {
         _weapon = weapon;
         _bulletCount = bulletCount;
         _spreadAngle = spreadAngle;
+        _animator = animator;
     }
 
     public void Execute(Transform origin)
     {
+        _animator?.SetTrigger("Spin");
+
         float startAngle = -_spreadAngle / 2f;
         for (int i = 0; i < _bulletCount; i++)
         {

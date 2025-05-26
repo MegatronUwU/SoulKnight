@@ -17,7 +17,7 @@ public class BossPhase1State : IBossState
         _attacks = new List<IBossAttack>
         {
             new SimpleShot(_boss.Phase1Weapon),
-            new FanShot(_boss.Phase1Weapon, 5, 45f)
+            new FanShot(_boss.Phase1Weapon, 5, 45f, _boss.Animator)
         };
     }
 
