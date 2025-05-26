@@ -1,18 +1,24 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BossPhase2State : IBossState
 {
     private BossStateMachine _boss;
-    private WeaponData _weapon;
     private Transform _origin;
-    private float _cooldown = 1f;
+    private List<IBossAttack> _attacks;
+    private float _cooldown = 1.5f;
     private float _timer;
 
-    public BossPhase2State(BossStateMachine boss, WeaponData weapon, Transform origin)
+    public BossPhase2State(BossStateMachine boss, Transform origin)
     {
         _boss = boss;
-        _weapon = weapon;
         _origin = origin;
+
+        _attacks = new List<IBossAttack>
+        {
+            new FanShot(_boss.Phase2Weapon, 7, 60f),
+            new SpiralShot(_boss.Phase2Weapon, 12, 30f)
+        };
     }
 
     public void Enter()
@@ -26,7 +32,8 @@ public class BossPhase2State : IBossState
         _timer -= Time.deltaTime;
         if (_timer <= 0f)
         {
-            _weapon.Shoot(_origin, Team.Enemy);
+            var attack = _attacks[Random.Range(0, _attacks.Count)];
+            attack.Execute(_origin);
             _timer = _cooldown;
         }
     }

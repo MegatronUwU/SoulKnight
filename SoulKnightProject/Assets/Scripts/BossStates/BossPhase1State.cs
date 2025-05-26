@@ -1,18 +1,25 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BossPhase1State : IBossState
 {
     private BossStateMachine _boss;
-    private WeaponData _weapon;
     private Transform _origin;
+    private List<IBossAttack> _attacks;
     private float _cooldown = 2f;
     private float _timer;
 
-    public BossPhase1State(BossStateMachine boss, WeaponData weapon, Transform origin)
+    public BossPhase1State(BossStateMachine boss, Transform origin)
     {
         _boss = boss;
-        _weapon = weapon;
         _origin = origin;
+
+        // Choisis ici les attaques de la phase 1
+        _attacks = new List<IBossAttack>
+        {
+            new SimpleShot(_boss.Phase1Weapon),
+            new FanShot(_boss.Phase1Weapon, 5, 45f)
+        };
     }
 
     public void Enter()
@@ -26,13 +33,14 @@ public class BossPhase1State : IBossState
         _timer -= Time.deltaTime;
         if (_timer <= 0f)
         {
-            _weapon.Shoot(_origin, Team.Enemy);
+            var attack = _attacks[Random.Range(0, _attacks.Count)];
+            attack.Execute(_origin);
             _timer = _cooldown;
         }
 
         if (_boss.Health.CurrentHealth <= _boss.Health.MaxHealth / 2)
         {
-            _boss.SetState(new BossPhase2State(_boss, _boss.Phase2Weapon, _origin));
+            _boss.SetState(new BossPhase2State(_boss, _origin));
         }
     }
 
