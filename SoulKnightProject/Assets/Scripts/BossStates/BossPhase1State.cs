@@ -14,7 +14,6 @@ public class BossPhase1State : IBossState
         _boss = boss;
         _origin = origin;
 
-        // Choisis ici les attaques de la phase 1
         _attacks = new List<IBossAttack>
         {
             new SimpleShot(_boss.Phase1Weapon),
@@ -26,8 +25,6 @@ public class BossPhase1State : IBossState
     {
         Debug.Log("Boss Phase 1");
         _timer = _cooldown;
-
-        _boss.Health.HealthChanged += OnHealthChanged;
     }
 
     public void Update()
@@ -39,27 +36,15 @@ public class BossPhase1State : IBossState
             attack.Execute(_origin);
             _timer = _cooldown;
         }
-<<<<<<< HEAD
 
         if (_boss.Health.CurrentHealth <= _boss.Health.MaxHealth / 2)
         {
             _boss.SetState(new BossPhase2State(_boss, _origin));
         }
-=======
->>>>>>> b02e063ea034a49a43fb9856cb2a96aaf448c8c7
     }
 
-    private void OnHealthChanged(int currentHealth, int maxHealth)
-	{
-		if (currentHealth <= maxHealth / 2)
-		{
-			_boss.SetState(new BossPhase2State(_boss, _boss.Phase2Weapon, _origin));
-		}
-	}
-
-	public void Exit()
+    public void Exit()
     {
-        _boss.Health.HealthChanged -= OnHealthChanged;
         Debug.Log("Exit Phase 1");
-	}
+    }
 }

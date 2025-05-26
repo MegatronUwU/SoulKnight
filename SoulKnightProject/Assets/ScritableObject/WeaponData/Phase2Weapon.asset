@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e835c6adda9f53a4c8cf089d5e18221f, type: 3}
   m_Name: Phase2Weapon
   m_EditorClassIdentifier: 
-  WeaponName: 
+  WeaponName: SpiralShot
   Icon: {fileID: 0}
-  MaxAmmo: 0
-  FireRate: 0
+  MaxAmmo: 100
+  FireRate: 2
   ProjectileSpeed: 0
   ProjectilePrefab: {fileID: 0}
   SFXName: 
