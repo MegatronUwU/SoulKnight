@@ -19,6 +19,7 @@ public class DungeonPathGenerator : MonoBehaviour
 	[SerializeField] private RoomConfiguration _bossRoomConfiguration = null;
 
 	[SerializeField] private GameObject _floorLinePrefab;
+	[SerializeField] private GameObject _groundTilePrefab = null;
 
 
 
@@ -228,7 +229,7 @@ public class DungeonPathGenerator : MonoBehaviour
 		if (bossRoom != null && bossRoom.BossPrefab != null)
 		{
 			Vector3 bossSpawnPosition = roomPosition + Vector3.up * 0.5f;
-			GameObject bossInstance = GameObject.Instantiate(bossRoom.BossPrefab, bossSpawnPosition, Quaternion.identity, bossRoom.transform);
+			GameObject bossInstance = Instantiate(bossRoom.BossPrefab, bossSpawnPosition, Quaternion.identity, bossRoom.transform);
 
 			if (bossInstance.TryGetComponent(out Enemy enemyBoss))
 			{
@@ -246,6 +247,8 @@ public class DungeonPathGenerator : MonoBehaviour
 		InstantiateFloorLineBetween(current, up, roomPosition);
 		InstantiateFloorLineBetween(up, upRight, roomPosition);
 		InstantiateFloorLineBetween(right, upRight, roomPosition);
+
+		Instantiate(_groundTilePrefab, roomPosition, Quaternion.identity, _dungeonParent);
 	}
 
 	private void RemoveWallsBetween(RoomData a, Direction dirToB, RoomData b)
