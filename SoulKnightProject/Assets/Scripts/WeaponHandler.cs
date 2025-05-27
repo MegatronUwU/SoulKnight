@@ -14,6 +14,9 @@ public class WeaponHandler : MonoBehaviour
 
     private readonly System.Collections.Generic.Dictionary<WeaponData, int> _ammoByWeapon = new();
 
+    private bool _isShootingHeld = false;
+    private float _shootTimer = 0f;
+
 
     private void Start()
 	{
@@ -23,6 +26,19 @@ public class WeaponHandler : MonoBehaviour
 		if (_weaponUI != null)
 			_weaponUI.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo);
 
+    }
+
+    private void Update()
+    {
+        if (_isShootingHeld && _currentWeapon != null && _currentWeapon.CanShoot())
+        {
+            _shootTimer -= Time.deltaTime;
+            if (_shootTimer <= 0f)
+            {
+                ShootAuto();
+                _shootTimer = _currentWeapon.FireRate;
+            }
+        }
     }
 
     public void TriggerAttack()
@@ -125,5 +141,16 @@ public class WeaponHandler : MonoBehaviour
     public int GetCurrentAmmo() => _currentAmmo;
 
     public int GetMaxAmmo() => _currentWeapon != null ? _currentWeapon.MaxAmmo : 0;
+
+    public void StartShooting()
+    {
+        _isShootingHeld = true;
+        _shootTimer = 0f; 
+    }
+
+    public void StopShooting()
+    {
+        _isShootingHeld = false;
+    }
 
 }

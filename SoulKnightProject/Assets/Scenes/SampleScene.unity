@@ -1188,6 +1188,7 @@ GameObject:
   - component: {fileID: 881676032}
   - component: {fileID: 881676031}
   - component: {fileID: 881676030}
+  - component: {fileID: 881676033}
   m_Layer: 5
   m_Name: AttackButton
   m_TagString: Untagged
@@ -1258,19 +1259,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 881676031}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1332197401}
-        m_TargetAssemblyTypeName: WeaponHandler, Assembly-CSharp
-        m_MethodName: TriggerAttack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &881676031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,6 +1298,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 881676028}
   m_CullTransparentMesh: 1
+--- !u!114 &881676033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881676028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1332197401}
+          m_TargetAssemblyTypeName: WeaponHandler, Assembly-CSharp
+          m_MethodName: StartShooting
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1332197401}
+          m_TargetAssemblyTypeName: WeaponHandler, Assembly-CSharp
+          m_MethodName: StopShooting
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1332197401}
+          m_TargetAssemblyTypeName: WeaponHandler, Assembly-CSharp
+          m_MethodName: TriggerAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1030839367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,6 +1989,7 @@ MonoBehaviour:
   _weaponUI: {fileID: 242382518}
   _animator: {fileID: 1080250622}
   _bulletSpawnPoint: {fileID: 1506454917}
+  _maxTargetingDistance: 15
 --- !u!1 &1465107091
 GameObject:
   m_ObjectHideFlags: 0

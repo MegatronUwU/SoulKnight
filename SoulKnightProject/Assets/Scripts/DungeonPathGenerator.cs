@@ -31,6 +31,7 @@ public class DungeonPathGenerator : MonoBehaviour
 		TryMergeBigRoom();
 		GenerateCorridors();
 		PopulateRooms();
+		TeleportPlayerToSafeRoom();
 	}
 
 	private void GeneratePath()
@@ -290,6 +291,38 @@ public class DungeonPathGenerator : MonoBehaviour
 		}
 
 		Instantiate(_floorLinePrefab, pos, rotation, _dungeonParent);
+	}
+
+	private void TeleportPlayerToSafeRoom()
+	{
+		GameObject player = GameObject.FindGameObjectWithTag("Player");
+		if (player == null) return;
+
+		var bossRoomData = _roomDatas.FirstOrDefault(rd => rd.IsMergedToBigRoom);
+		if (bossRoomData == null) return;
+
+		var playerRoomData = _roomDatas.FirstOrDefault(rd =>
+			Vector3.Distance(rd.Position, player.transform.position) < _roomSpacing * 0.5f
+		);
+
+		if (playerRoomData != null && playerRoomData.IsMergedToBigRoom)
+		{
+			var safeRoom = _roomDatas
+				.Where(rd => !rd.IsMergedToBigRoom && rd.Neighbours.Count <= 2 && rd.Configuration == _normalRoomConfiguration)
+				.OrderByDescending(rd => Vector3.Distance(rd.Position, bossRoomData.Position))
+				.FirstOrDefault();
+
+			if (safeRoom != null)
+			{
+				if (player.TryGetComponent<Rigidbody>(out var rb))
+				{
+					rb.linearVelocity = Vector3.zero;
+					rb.angularVelocity = Vector3.zero;
+				}
+
+				player.transform.position = safeRoom.Position + Vector3.up;
+			}
+		}
 	}
 
 	private class RoomData
