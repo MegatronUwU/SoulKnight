@@ -236,6 +236,7 @@ public class DungeonPathGenerator : MonoBehaviour
 				Vector3 doorSpawnPosition = roomPosition + Vector3.back * 2f;
 				bossRoom.SetBoss(enemyBoss, doorSpawnPosition);
 			}
+
 		}
 
 		RemoveWallsBetween(current, Direction.Right, right);

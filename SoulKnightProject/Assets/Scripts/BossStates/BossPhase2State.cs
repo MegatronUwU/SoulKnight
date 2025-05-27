@@ -33,6 +33,10 @@ public class BossPhase2State : IBossState
         if (_timer <= 0f)
         {
             var attack = _attacks[Random.Range(0, _attacks.Count)];
+            Vector3 direction = (_boss.PlayerTarget.position - _origin.position).normalized;
+
+            _boss.BossTransform.forward = direction;
+
             attack.Execute(_origin);
             _timer = _cooldown;
         }

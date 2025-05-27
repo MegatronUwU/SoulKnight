@@ -18,7 +18,7 @@ public class FanShot : IBossAttack
 
     public void Execute(Transform origin)
     {
-        _animator?.SetTrigger("Spin");
+        _animator?.SetTrigger("TriggerSpin");
 
         float startAngle = -_spreadAngle / 2f;
         for (int i = 0; i < _bulletCount; i++)

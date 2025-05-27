@@ -2119,7 +2119,7 @@ Animator:
   m_GameObject: {fileID: 8271709850941303149}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 24f8d6aa660f9444ab0544d85c672e4a, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0dbca1730b8d8924ca7fbabe376476a8, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2188,6 +2188,7 @@ MonoBehaviour:
   _shootOrigin: {fileID: 496492154081423068}
   _phase1Weapon: {fileID: 11400000, guid: 35d18a5d1b2079d4581725e0ceec3af7, type: 2}
   _phase2Weapon: {fileID: 11400000, guid: 2162f8a63ddf6a54b90144545370aece, type: 2}
+  _playerReferenceData: {fileID: 11400000, guid: 0a314d963fa5332469c0311aa495adfd, type: 2}
 --- !u!54 &7054987082902451473
 Rigidbody:
   m_ObjectHideFlags: 0

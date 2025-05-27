@@ -17,6 +17,12 @@ public class BossStateMachine : MonoBehaviour
     private Animator _animator;
     public Animator Animator => _animator;
 
+    [SerializeField] private PlayerReferenceData _playerReferenceData;
+    public Transform PlayerTarget => _playerReferenceData.Player.transform;
+
+    public Transform BossTransform => transform;
+
+
     private void Start()
     {
         SetState(new BossPhase1State(this, _shootOrigin));
