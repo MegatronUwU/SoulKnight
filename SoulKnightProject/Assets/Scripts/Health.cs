@@ -63,10 +63,18 @@ public class Health : MonoBehaviour
         if (_isDead) return;      
         _isDead = true;
 
+        foreach (var collider in GetComponentsInChildren<Collider>())
+            collider.enabled = false;
+
+        var playerMovement = GetComponent<PlayerMovement>();
+        if (playerMovement != null)
+            playerMovement.enabled = false;
+
         if (_animator != null)
             _animator.SetLayerWeight(1, 0f);
             _animator.SetTrigger("Die");
         
+
         SoundManager.Instance.Play("Die");
 
         OnDeath?.Invoke();

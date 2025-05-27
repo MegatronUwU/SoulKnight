@@ -10,6 +10,8 @@ public class WeaponHandler : MonoBehaviour
 
     private int _currentAmmo;
 
+    [SerializeField] private float _maxTargetingDistance = 15f;
+
 
 
     private void Start()
@@ -74,8 +76,13 @@ public class WeaponHandler : MonoBehaviour
 
         foreach (GameObject enemy in enemies)
         {
+            if (!enemy.activeInHierarchy) continue;
+
+            Health health = enemy.GetComponent<Health>();
+            if (health == null || health.IsDead) continue;
+
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distance < shortestDistance)
+            if (distance < shortestDistance && distance <= _maxTargetingDistance)
             {
                 shortestDistance = distance;
                 closestEnemy = enemy.transform;
