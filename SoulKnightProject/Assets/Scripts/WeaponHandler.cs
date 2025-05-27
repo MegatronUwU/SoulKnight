@@ -12,6 +12,7 @@ public class WeaponHandler : MonoBehaviour
 
     [SerializeField] private float _maxTargetingDistance = 15f;
 
+    private readonly System.Collections.Generic.Dictionary<WeaponData, int> _ammoByWeapon = new();
 
 
     private void Start()
@@ -38,12 +39,22 @@ public class WeaponHandler : MonoBehaviour
 
     public void SetWeapon(WeaponData newWeapon)
     {
+        if (_currentWeapon != null)
+        {
+            _ammoByWeapon[_currentWeapon] = _currentAmmo;
+        }
+
         _currentWeapon = newWeapon;
 
         if (_currentWeapon != null)
-            _currentAmmo = _currentWeapon.MaxAmmo;
+        {
+            if (_ammoByWeapon.TryGetValue(_currentWeapon, out int savedAmmo))
+                _currentAmmo = savedAmmo;
+            else
+                _currentAmmo = _currentWeapon.MaxAmmo;
+        }
 
-        if(_weaponUI != null)
+                if (_weaponUI != null)
             _weaponUI.UpdateUI(_currentWeapon.WeaponName, _currentAmmo, _currentWeapon.MaxAmmo); 
     }
 
