@@ -870,6 +870,7 @@ MonoBehaviour:
   _bossRoomConfiguration: {fileID: 11400000, guid: 77a9de05dbed2704cbd7c45b46818494, type: 2}
   _floorLinePrefab: {fileID: 2506363635481044125, guid: 9e08c059fe8c3064d83bb340cb963ba6, type: 3}
   _groundTilePrefab: {fileID: 8208680871767196979, guid: 92dd4af1679b3a846ba4e723b1b91631, type: 3}
+  _playerTransform: {fileID: 1030839371}
 --- !u!4 &763544257
 Transform:
   m_ObjectHideFlags: 0
@@ -1346,19 +1347,7 @@ MonoBehaviour:
   - eventID: 4
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1332197401}
-          m_TargetAssemblyTypeName: WeaponHandler, Assembly-CSharp
-          m_MethodName: TriggerAttack
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!1 &1030839367
 GameObject:
   m_ObjectHideFlags: 0

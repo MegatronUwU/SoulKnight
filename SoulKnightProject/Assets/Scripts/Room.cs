@@ -21,6 +21,7 @@ public class Room : MonoBehaviour
 	private int _enemiesCount = 0;
 	private RoomConfiguration _configuration;
 	private RoomConnector _connector;
+	public RoomConnector Connector => _connector;
 
 	[SerializeField] private Transform _bossSpawnPoint;
 	[SerializeField] private GameObject _bossPrefab;
@@ -30,6 +31,8 @@ public class Room : MonoBehaviour
 
 	[SerializeField] private RestartDoor _restartDoorPrefab;
 	private RestartDoor _spawnedRestartDoor;
+
+	RoomData _roomData = null;
 
 	private void Awake()
 	{
@@ -45,8 +48,11 @@ public class Room : MonoBehaviour
 		}
 	}
 
-	public void InitializeRoom(RoomConfiguration configuration)
+	public void InitializeRoom(RoomData roomData)
 	{
+		_roomData = roomData;
+		RoomConfiguration configuration = roomData.Configuration;
+
 		_configuration = configuration;
 
 		_connector.InitializeDoors(this);
@@ -74,6 +80,16 @@ public class Room : MonoBehaviour
 	{
 		if (_activated) return;
 		_activated = true;
+
+		if(_roomData.IsMergedToBigRoom)
+		{
+			_connector.CloseAllDoors();
+
+			foreach(RoomData roomData in _roomData.BossRooms)
+				roomData.InstantiatedRoom.Connector.CloseAllDoors();
+
+			return;
+		}
 
 		if (_configuration.MaxEnemiesCount <= 0)
 			return;

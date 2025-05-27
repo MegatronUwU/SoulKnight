@@ -20,7 +20,8 @@ public class SpiralShot : IBossAttack
 
     public void Execute(Transform origin)
     {
-        _animator?.SetTrigger("TriggerJump");
+        if(_animator != null)
+			_animator.SetTrigger("TriggerJump");
 
         for (int i = 0; i < _bulletCount; i++)
         {

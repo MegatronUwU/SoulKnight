@@ -21,7 +21,7 @@ public class DungeonPathGenerator : MonoBehaviour
 	[SerializeField] private GameObject _floorLinePrefab;
 	[SerializeField] private GameObject _groundTilePrefab = null;
 
-
+	[SerializeField] private Transform _playerTransform = null;
 
 	private void Start()
 	{
@@ -110,7 +110,7 @@ public class DungeonPathGenerator : MonoBehaviour
 		foreach (RoomData data in _roomDatas)
 		{
 			//data.InstantiatedRoom.InitializeRoom(_normalRoomConfiguration);
-			data.InstantiatedRoom.InitializeRoom(data.Configuration);
+			data.InstantiatedRoom.InitializeRoom(data);
 		}
 	}
 
@@ -219,6 +219,9 @@ public class DungeonPathGenerator : MonoBehaviour
 		{
 			roomData.Configuration = _bossRoomConfiguration;
 			roomData.IsMergedToBigRoom = true;
+
+			roomData.BossRooms = new List<RoomData>(roomDatas);
+			roomData.BossRooms.Remove(roomData);
 		}
 
 		RoomData current = roomDatas[0];
@@ -295,14 +298,11 @@ public class DungeonPathGenerator : MonoBehaviour
 
 	private void TeleportPlayerToSafeRoom()
 	{
-		GameObject player = GameObject.FindGameObjectWithTag("Player");
-		if (player == null) return;
-
 		var bossRoomData = _roomDatas.FirstOrDefault(rd => rd.IsMergedToBigRoom);
 		if (bossRoomData == null) return;
 
 		var playerRoomData = _roomDatas.FirstOrDefault(rd =>
-			Vector3.Distance(rd.Position, player.transform.position) < _roomSpacing * 0.5f
+			Vector3.Distance(rd.Position, _playerTransform.position) < _roomSpacing * 0.5f
 		);
 
 		if (playerRoomData != null && playerRoomData.IsMergedToBigRoom)
@@ -314,42 +314,13 @@ public class DungeonPathGenerator : MonoBehaviour
 
 			if (safeRoom != null)
 			{
-				if (player.TryGetComponent<Rigidbody>(out var rb))
-				{
-					rb.linearVelocity = Vector3.zero;
-					rb.angularVelocity = Vector3.zero;
-				}
+				//if (_playerTransform.TryGetComponent<Rigidbody>(out var rb))
+				//{
+				//	rb.linearVelocity = Vector3.zero;
+				//	rb.angularVelocity = Vector3.zero;
+				//}
 
-				player.transform.position = safeRoom.Position + Vector3.up;
-			}
-		}
-	}
-
-	private class RoomData
-	{
-		public Vector3 Position;
-		public List<Direction> Directions = new();
-		public Dictionary<Direction, RoomData> Neighbours = new();
-		public Room InstantiatedRoom = null;
-		public RoomConfiguration Configuration;
-		public bool IsMergedToBigRoom = false;
-
-		public RoomData(Vector3 pos)
-		{
-			Position = pos;
-		}
-
-		public void AddNeighbourPosition(Direction direction)
-		{
-			if (!Directions.Contains(direction))
-				Directions.Add(direction);
-		}
-
-		public void AddNeighbourPosition(Direction direction, RoomData neighbour)
-		{
-			if (!Neighbours.TryAdd(direction, neighbour))
-			{
-				Debug.LogError("Duplicate neighbour");
+				_playerTransform.position = new(safeRoom.Position.x, _playerTransform.position.y, safeRoom.Position.z);
 			}
 		}
 	}
