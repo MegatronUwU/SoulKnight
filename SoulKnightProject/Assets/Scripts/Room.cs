@@ -162,7 +162,23 @@ public class Room : MonoBehaviour
 		if (_enemiesCount > 0)
 			return;
 
-		_connector.OpenAllDoors();
+		if (_roomData != null && _roomData.IsMergedToBigRoom)
+		{
+			_connector.OpenAllDoors();
+
+			foreach (RoomData roomData in _roomData.BossRooms)
+			{
+				Room connectedRoom = roomData.InstantiatedRoom;
+				if (connectedRoom != null && connectedRoom.Connector != null)
+				{
+					connectedRoom.Connector.OpenAllDoors();
+				}
+			}
+		}
+		else
+		{
+			_connector.OpenAllDoors();
+		}
 
 		if (_spawnedRestartDoor != null)
 			_spawnedRestartDoor.ActivateDoor();
