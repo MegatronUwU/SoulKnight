@@ -11,6 +11,7 @@ public class BossStateMachine : MonoBehaviour
     [SerializeField] private WeaponData _phase1Weapon;
     [SerializeField] private WeaponData _phase2Weapon;
 
+    public Transform ShootOrigin => _shootOrigin;
     public WeaponData Phase1Weapon => _phase1Weapon;
     public WeaponData Phase2Weapon => _phase2Weapon;
 
@@ -26,7 +27,7 @@ public class BossStateMachine : MonoBehaviour
     private void Start()
     {
         PlayerTarget = _playerReferenceData.Player.transform;
-		SetState(new BossPhase1State(this, _shootOrigin));
+		//SetState(new BossPhase1State(this, _shootOrigin));
     }
 
     private void Awake()

@@ -27,6 +27,8 @@ public class Room : MonoBehaviour
 	[SerializeField] private GameObject _bossPrefab;
 	public GameObject BossPrefab => _bossPrefab;
 
+	public UnityEngine.Events.UnityEvent OnPlayerEntered = new UnityEngine.Events.UnityEvent();
+
 	private static bool _hasSpawnedBoss = false;
 
 	[SerializeField] private RestartDoor _restartDoorPrefab;
@@ -81,12 +83,14 @@ public class Room : MonoBehaviour
 		if (_activated) return;
 		_activated = true;
 
-		if(_roomData.IsMergedToBigRoom)
+		if (_roomData.IsMergedToBigRoom)
 		{
 			_connector.CloseAllDoors();
 
 			foreach(RoomData roomData in _roomData.BossRooms)
 				roomData.InstantiatedRoom.Connector.CloseAllDoors();
+
+			OnPlayerEntered.Invoke();
 
 			return;
 		}
@@ -216,6 +220,7 @@ public class Room : MonoBehaviour
 
 		return _spawnArea.position + randomPoint;
 	}
+
 }
 
 // Les Type de room

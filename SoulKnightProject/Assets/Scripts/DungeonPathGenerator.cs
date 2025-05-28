@@ -239,6 +239,16 @@ public class DungeonPathGenerator : MonoBehaviour
 			{
 				Vector3 doorSpawnPosition = roomPosition + Vector3.back * 2f;
 				bossRoom.SetBoss(enemyBoss, doorSpawnPosition);
+
+				BossStateMachine bossStateMachine = enemyBoss.GetComponent<BossStateMachine>();
+				if (bossStateMachine != null)
+				{
+					bossRoom.OnPlayerEntered.AddListener(() =>
+					{
+						Debug.Log("Player dans big room : Phase 1");
+						bossStateMachine.SetState(new BossPhase1State(bossStateMachine, bossStateMachine.ShootOrigin));
+					});
+				}
 			}
 		}
 
