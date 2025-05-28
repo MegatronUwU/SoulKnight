@@ -308,9 +308,17 @@ public class DungeonPathGenerator : MonoBehaviour
 		if (playerRoomData != null && playerRoomData.IsMergedToBigRoom)
 		{
 			var safeRoom = _roomDatas
-				.Where(rd => !rd.IsMergedToBigRoom && rd.Neighbours.Count <= 2 && rd.Configuration == _normalRoomConfiguration)
+				.Where(rd => !rd.IsMergedToBigRoom && rd.Neighbours.Count < 3 && rd.Configuration == _normalRoomConfiguration)
 				.OrderByDescending(rd => Vector3.Distance(rd.Position, bossRoomData.Position))
 				.FirstOrDefault();
+
+			if (safeRoom == null)
+			{
+				safeRoom = _roomDatas
+					.Where(rd => !rd.IsMergedToBigRoom && rd.Configuration == _normalRoomConfiguration)
+					.OrderByDescending(rd => Vector3.Distance(rd.Position, bossRoomData.Position))
+					.FirstOrDefault();
+			}
 
 			if (safeRoom != null)
 			{
@@ -320,7 +328,7 @@ public class DungeonPathGenerator : MonoBehaviour
 				//	rb.angularVelocity = Vector3.zero;
 				//}
 
-				_playerTransform.position = new(safeRoom.Position.x, _playerTransform.position.y, safeRoom.Position.z);
+				_playerTransform.position = new Vector3(safeRoom.Position.x, _playerTransform.position.y, safeRoom.Position.z);
 			}
 		}
 	}
