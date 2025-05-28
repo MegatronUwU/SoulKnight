@@ -23,6 +23,9 @@ public class DungeonPathGenerator : MonoBehaviour
 
 	[SerializeField] private Transform _playerTransform = null;
 
+	public bool HasPhaseStarted = false;
+
+
 	private void Start()
 	{
 		GeneratePath();
@@ -243,11 +246,24 @@ public class DungeonPathGenerator : MonoBehaviour
 				BossStateMachine bossStateMachine = enemyBoss.GetComponent<BossStateMachine>();
 				if (bossStateMachine != null)
 				{
-					bossRoom.OnPlayerEntered.AddListener(() =>
+					Debug.Log("Listener ajouté");
+
+					bool phaseStarted = false;
+
+					foreach (RoomData rd in roomDatas)
 					{
-						Debug.Log("Player dans big room : Phase 1");
-						bossStateMachine.SetState(new BossPhase1State(bossStateMachine, bossStateMachine.ShootOrigin));
-					});
+						rd.InstantiatedRoom.OnPlayerEntered.AddListener(() =>
+						{
+							Debug.Log("Player entré dans une salle de la big room");
+
+							if (!phaseStarted)
+							{
+								phaseStarted = true;
+								Debug.Log("Début de la phase 1 !");
+								bossStateMachine.SetState(new BossPhase1State(bossStateMachine, bossStateMachine.ShootOrigin));
+							}
+						});
+					}
 				}
 			}
 		}

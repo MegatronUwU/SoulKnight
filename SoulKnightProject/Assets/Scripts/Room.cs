@@ -90,8 +90,9 @@ public class Room : MonoBehaviour
 			foreach(RoomData roomData in _roomData.BossRooms)
 				roomData.InstantiatedRoom.Connector.CloseAllDoors();
 
-			OnPlayerEntered.Invoke();
+			Debug.Log("Start room Invoke Player");
 
+			OnPlayerEntered.Invoke();
 			return;
 		}
 
