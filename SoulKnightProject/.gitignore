@@ -6,6 +6,7 @@
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 /[Uu]ser[Ss]ettings/
+/.utmp/
 
 !/[Aa]ssets/**/*.meta
 

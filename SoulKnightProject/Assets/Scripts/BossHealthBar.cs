@@ -13,6 +13,7 @@ public class BossHealthBar : MonoBehaviour
     {
         gameObject.SetActive(false); 
     }
+
     private void OnDisable()
     {
         if (_bossHealth != null)
@@ -32,7 +33,11 @@ public class BossHealthBar : MonoBehaviour
         if (_bossNameText != null)
             _bossNameText.text = bossName;
 
-        gameObject.SetActive(true);
+    }
+
+    public void ShowUIOnRoomEnter()
+    {
+
     }
 
     private void OnHealthChanged(int currentHealth, int maxHealth)
