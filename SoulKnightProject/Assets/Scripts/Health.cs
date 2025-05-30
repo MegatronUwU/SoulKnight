@@ -23,6 +23,8 @@ public class Health : MonoBehaviour
 
     private bool _isDead = false;
 
+    [SerializeField] private GameOverUI gameOverUI;
+
 
 
     private void Awake()
@@ -73,11 +75,18 @@ public class Health : MonoBehaviour
         if (_animator != null)
             _animator.SetLayerWeight(1, 0f);
             _animator.SetTrigger("Die");
-        
 
         SoundManager.Instance.Play("Die");
 
         OnDeath?.Invoke();
+
+        Invoke(nameof(ShowGameOver), 3f);
         Destroy(gameObject, 3f);
+    }
+
+    private void ShowGameOver()
+    {
+        Time.timeScale = 0f;
+        gameOverUI.Show();
     }
 }

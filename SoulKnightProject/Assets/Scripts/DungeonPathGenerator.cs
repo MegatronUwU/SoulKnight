@@ -240,8 +240,21 @@ public class DungeonPathGenerator : MonoBehaviour
 
 			if (bossInstance.TryGetComponent(out Enemy enemyBoss))
 			{
+				Health bossHealth = enemyBoss.GetComponent<Health>();
+
 				Vector3 doorSpawnPosition = roomPosition + Vector3.back * 2f;
 				bossRoom.SetBoss(enemyBoss, doorSpawnPosition);
+
+				BossHealthBar bossHealthBar = FindObjectOfType<BossHealthBar>(true);
+				if (bossHealthBar != null)
+				{
+					bossHealthBar.gameObject.SetActive(false); 
+				}
+
+				if (bossHealthBar != null && bossHealth != null)
+				{
+					bossHealthBar.Init(bossHealth, "Boss");
+				}
 
 				BossStateMachine bossStateMachine = enemyBoss.GetComponent<BossStateMachine>();
 				if (bossStateMachine != null)
@@ -262,6 +275,15 @@ public class DungeonPathGenerator : MonoBehaviour
 								Debug.Log("Début de la phase 1 !");
 								bossStateMachine.SetState(new BossPhase1State(bossStateMachine, bossStateMachine.ShootOrigin));
 							}
+						});
+					}
+
+					if (bossHealth != null)
+					{
+						bossHealth.OnDeath.AddListener(() =>
+						{
+							if (bossHealthBar != null)
+								bossHealthBar.gameObject.SetActive(false);
 						});
 					}
 				}
