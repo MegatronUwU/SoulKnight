@@ -25,9 +25,15 @@ public class DungeonPathGenerator : MonoBehaviour
 
 	public bool HasPhaseStarted = false;
 
+	[SerializeField] private GameObject _loadingScreen;
+
+
 
 	private void Start()
 	{
+		if (_loadingScreen != null)
+			_loadingScreen.SetActive(true);
+
 		GeneratePath();
 		FindRoomsNeighbours();
 		SpawnRooms();
@@ -35,6 +41,8 @@ public class DungeonPathGenerator : MonoBehaviour
 		GenerateCorridors();
 		PopulateRooms();
 		TeleportPlayerToSafeRoom();
+
+		Invoke(nameof(HideLoadingScreen), 0.5f);
 	}
 
 	private void GeneratePath()
@@ -253,7 +261,7 @@ public class DungeonPathGenerator : MonoBehaviour
 
 				if (bossHealthBar != null && bossHealth != null)
 				{
-					bossHealthBar.Init(bossHealth, "Boss");
+					bossHealthBar.Init(bossHealth, "Robot sous café");
 				}
 
 				BossStateMachine bossStateMachine = enemyBoss.GetComponent<BossStateMachine>();
@@ -379,5 +387,11 @@ public class DungeonPathGenerator : MonoBehaviour
 				_playerTransform.position = new Vector3(safeRoom.Position.x, _playerTransform.position.y, safeRoom.Position.z);
 			}
 		}
+	}
+
+	private void HideLoadingScreen()
+	{
+		if (_loadingScreen != null)
+			_loadingScreen.SetActive(false);
 	}
 }
