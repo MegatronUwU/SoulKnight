@@ -39,6 +39,12 @@ public class WeaponHandler : MonoBehaviour
 				_shootTimer = _currentWeapon.FireRate;
 			}
 		}
+
+		float cooldownProgress = 1f - (_shootTimer / _currentWeapon.FireRate);
+		cooldownProgress = Mathf.Clamp01(cooldownProgress);
+
+		if (_weaponUI != null)
+			_weaponUI.UpdateCooldown(cooldownProgress);
 	}
 
 	public void TriggerAttack()
